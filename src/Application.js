@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 import { actions as authenticateActions } from './actions/authenticate';
 import Login from './components/Login';
@@ -14,6 +15,19 @@ const Loading = () => {
         <Backdrop open={true} style={{zIndex: '99999'}}>
             <CircularProgress color="inherit" />
         </Backdrop>
+    );
+}
+
+const GlobalMessage = ({type, message}) => {
+    return (
+        <Snackbar
+            autoHideDuration={5000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={type !== ''}
+            // onClose={this._closeToast}
+        >
+            <Alert severity={type}>{message}</Alert>
+        </Snackbar>
     );
 }
 
@@ -63,6 +77,7 @@ class Application extends Component {
             return (
                 <div id="Application">
                     {this.state.pageLoading && <Loading />}
+                    <GlobalMessage {...this.state.globalMessages} />
 
                     <AppRoutes />
                 </div>

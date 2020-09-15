@@ -7,7 +7,6 @@ import { actions as authenticateActions } from '../actions/authenticate';
 export class LogoutComponent extends Component {
 
     componentDidMount() {
-        console.log('logout from: ', this.props.location.pathname);
         this.props.requestLogout();
     }
 
