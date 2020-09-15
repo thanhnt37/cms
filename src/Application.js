@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
+import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
 
 import { actions as authenticateActions } from './actions/authenticate';
 import Login from './components/Login';
@@ -8,7 +9,13 @@ import AppRoutes from "./components/Routes";
 
 const _ = require('lodash');
 
-const Loading = <h1>Loading ...</h1>
+const Loading = () => {
+    return (
+        <Backdrop open={true} style={{zIndex: '99999'}}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
+    );
+}
 
 class Application extends Component {
 
@@ -20,18 +27,24 @@ class Application extends Component {
                 type: '',
                 message: '',
             },
-            pageLoading: false
+            pageLoading: true
         };
     }
 
     componentDidMount() {
-        console.log('this.props.location.pathname: ', this.props.location.pathname);
         this.props.requestAuthenticate(this.props.location.pathname);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return {
+            globalMessages: nextProps.globalMessages,
+            pageLoading: nextProps.pageLoading
+        };
     }
 
     render() {
         if(this.props.authenticate.authUser === null) {
-            return <h1>Loading ...</h1>
+            return <Loading />
         } else if(_.has(this.props.authenticate, 'authUser') && !_.isEmpty(this.props.authenticate.authUser)) {
             if(_.has(this.props.authenticate, 'authUser.challengeName') && !_.isEmpty(this.props.authenticate.authUser.challengeName) && this.props.location.pathname !== '/auth-challenges/change-password') {
                 return <Redirect to="/auth-challenges/change-password"/>
@@ -49,6 +62,8 @@ class Application extends Component {
 
             return (
                 <div id="Application">
+                    {this.state.pageLoading && <Loading />}
+
                     <AppRoutes />
                 </div>
             );
@@ -56,13 +71,21 @@ class Application extends Component {
             return <Redirect to="/login"/>
         }
         else {
-            return <Login />
+            return (
+                <div id="Application">
+                    {this.state.pageLoading && <Loading />}
+
+                    <Login />
+                </div>
+            )
         }
     }
 }
 
 const mapStateToProps = state => ({
-    authenticate: state.authenticate
+    authenticate: state.authenticate,
+    globalMessages: state.globalMessages,
+    pageLoading: state.pageLoading
 });
 
 const actions = {

@@ -1,6 +1,6 @@
 import {constants} from '../actions/pageLoading';
 
-const initState = false;
+const initState = true;
 
 export default (state = initState, action) => {
     switch (action.type) {

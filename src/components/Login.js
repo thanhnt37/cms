@@ -9,18 +9,23 @@ import {
 import './login/styles.scss';
 
 import { actions as authenticateActions } from '../actions/authenticate';
+import { actions as pageLoadingActions } from "../actions/pageLoading";
 
 export class LoginContainer extends Component {
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        this.props.stopPageLoading();
+    }
+
     _handleLoginSubmit = (e) => {
+        this.props.startPageLoading();
         e.preventDefault();
 
         let email = e.target.email.value;
         let password = e.target.password.value;
-        console.log("message from handleLoginSubmit() _________", email, password);
         this.props.requestLogin(email, password);
     };
 
@@ -37,6 +42,8 @@ const mapStateToProps = state => ({});
 
 const actions = {
     requestLogin: authenticateActions.requestLogin,
+    startPageLoading: pageLoadingActions.startPageLoading,
+    stopPageLoading: pageLoadingActions.stopPageLoading
 };
 
 export default connect(mapStateToProps, actions)(LoginContainer);
