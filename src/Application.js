@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
+import AppRoutes from "./components/Routes";
+
 class Application extends Component {
 
     constructor(props) {
@@ -17,8 +20,8 @@ class Application extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Successful !!!</h1>
+            <div id="Application">
+                <AppRoutes />
             </div>
         );
     }
