@@ -5,6 +5,7 @@ import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
 import { actions as authenticateActions } from './actions/authenticate';
+import { actions as globalMessageActions } from './actions/globalMessages';
 import Layout from './components/layout/index';
 import Login from './components/login/index';
 import AppRoutes from "./components/Routes";
@@ -19,13 +20,13 @@ const Loading = () => {
     );
 }
 
-const GlobalMessage = ({type, message}) => {
+const GlobalMessage = ({type, message, handleCloseToast}) => {
     return (
         <Snackbar
             autoHideDuration={5000}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={type !== ''}
-            // onClose={this._closeToast}
+            onClose={handleCloseToast}
         >
             <Alert severity={type}>{message}</Alert>
         </Snackbar>
@@ -57,6 +58,10 @@ class Application extends Component {
         };
     }
 
+    _closeToast = () => {
+        this.props.resetAllMessage()
+    }
+
     render() {
         if(this.props.authenticate.authUser === null) {
             return <Loading />
@@ -78,7 +83,7 @@ class Application extends Component {
             return (
                 <Layout>
                     {this.state.pageLoading && <Loading />}
-                    <GlobalMessage {...this.state.globalMessages} />
+                    { this.state.globalMessages.type && <GlobalMessage {...this.state.globalMessages} handleCloseToast={this._closeToast} /> }
 
                     <AppRoutes />
                 </Layout>
@@ -105,7 +110,8 @@ const mapStateToProps = state => ({
 });
 
 const actions = {
-    requestAuthenticate: authenticateActions.requestAuthenticate
+    requestAuthenticate: authenticateActions.requestAuthenticate,
+    resetAllMessage: globalMessageActions.resetAllMessage
 };
 
 export default withRouter(
