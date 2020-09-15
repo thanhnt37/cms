@@ -9,25 +9,19 @@ import {
 import './login/styles.scss';
 
 import { actions as authenticateActions } from '../actions/authenticate';
-import { actions as globalMessageActions } from "../actions/globalMessages";
 
 export class LoginContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-        };
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        return state;
     }
 
     _handleLoginSubmit = (e) => {
-        let email = e.target.email;
-        let password = e.target.password;
-        console.log("message from handleLoginSubmit() _________", email.value, password.value);
         e.preventDefault();
+
+        let email = e.target.email.value;
+        let password = e.target.password.value;
+        console.log("message from handleLoginSubmit() _________", email, password);
+        this.props.requestLogin(email, password);
     };
 
     render() {
@@ -43,8 +37,6 @@ const mapStateToProps = state => ({});
 
 const actions = {
     requestLogin: authenticateActions.requestLogin,
-    requestForgotPasswordSubmit: authenticateActions.requestForgotPasswordSubmit,
-    newErrorMessage: globalMessageActions.newErrorMessage
 };
 
 export default connect(mapStateToProps, actions)(LoginContainer);
