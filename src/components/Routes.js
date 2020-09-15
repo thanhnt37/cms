@@ -3,12 +3,14 @@ import { Switch, Route } from 'react-router-dom'
 
 //Routes container
 import Dashboard from "./Dashboard";
+import Articles from "./Articles";
 import Logout from "./Logout";
 
 const AppRoutes = () => {
     return (
         <Switch>
             <Route path='/logout' component={Logout}/>
+            <Route path='/articles' component={Articles}/>
             <Route path='/' component={Dashboard}/>
         </Switch>
     );

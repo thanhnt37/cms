@@ -5,7 +5,8 @@ import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
 import { actions as authenticateActions } from './actions/authenticate';
-import Login from './components/Login';
+import Layout from './components/layout/index';
+import Login from './components/login/index';
 import AppRoutes from "./components/Routes";
 
 const _ = require('lodash');
@@ -75,12 +76,12 @@ class Application extends Component {
             }
 
             return (
-                <div id="Application">
+                <Layout>
                     {this.state.pageLoading && <Loading />}
                     <GlobalMessage {...this.state.globalMessages} />
 
                     <AppRoutes />
-                </div>
+                </Layout>
             );
         } else if(this.props.location.pathname !== '/login') {
             return <Redirect to="/login"/>

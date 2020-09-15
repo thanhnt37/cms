@@ -6,10 +6,10 @@ import {
     TextField,
     Button,
 } from '@material-ui/core';
-import './login/styles.scss';
+import './styles.scss';
 
-import { actions as authenticateActions } from '../actions/authenticate';
-import { actions as pageLoadingActions } from "../actions/pageLoading";
+import { actions as authenticateActions } from '../../actions/authenticate';
+import { actions as pageLoadingActions } from "../../actions/pageLoading";
 
 export class LoginContainer extends Component {
     constructor(props) {

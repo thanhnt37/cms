@@ -1,0 +1,39 @@
+html {
+    font-size: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#left-aside {
+    width: 280px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            a {
+                padding: 10px 25px;
+                display: block;
+                box-sizing: border-box;
+
+                &:hover {
+                    background: #f1f1f1;
+                }
+                svg {
+                    vertical-align: text-bottom;
+                    margin-right: 15px;
+                }
+            }
+        }
+    }
+}

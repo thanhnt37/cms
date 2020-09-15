@@ -16,7 +16,7 @@ export class DashboardContainer extends Component {
     render() {
         return (
             <div id="Dashboard-Page">
-                <h1>Message from DashboardComponent</h1>
+                <h1>Message from Articles</h1>
             </div>
         );
     }
