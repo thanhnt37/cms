@@ -1,0 +1,14 @@
+#login-page {
+    max-width: 500px;
+    margin: 75px auto;
+    text-align: center;
+
+    img {
+        max-width: 200px;
+        border-radius: 100px;
+    }
+    button[type="submit"] {
+        padding: 5px 40px;
+        width: 100%;
+    }
+}
