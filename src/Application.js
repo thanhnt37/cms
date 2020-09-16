@@ -66,8 +66,8 @@ class Application extends Component {
         if(this.props.authenticate.authUser === null) {
             return <Loading />
         } else if(_.has(this.props.authenticate, 'authUser') && !_.isEmpty(this.props.authenticate.authUser)) {
-            if(_.has(this.props.authenticate, 'authUser.challengeName') && !_.isEmpty(this.props.authenticate.authUser.challengeName) && this.props.location.pathname !== '/auth-challenges/change-password') {
-                return <Redirect to="/auth-challenges/change-password"/>
+            if(_.has(this.props.authenticate, 'authUser.challengeName') && !_.isEmpty(this.props.authenticate.authUser.challengeName) && this.props.location.pathname !== '/login/complete-new-password') {
+                return <Redirect to="/login/complete-new-password"/>
             } else {
                 if(this.props.location.pathname === '/login') {
                     if(this.props.authenticate.pathBeforeAuthenticate === '/login') {
@@ -75,7 +75,7 @@ class Application extends Component {
                     } else {
                         return <Redirect to={this.props.authenticate.pathBeforeAuthenticate}/>
                     }
-                } else if(this.props.location.pathname === '/auth-challenges/change-password' && _.isEmpty(this.props.authenticate.authUser.challengeName)) {
+                } else if(this.props.location.pathname === '/login/complete-new-password' && _.isEmpty(this.props.authenticate.authUser.challengeName)) {
                     return <Redirect to="/"/>
                 }
             }

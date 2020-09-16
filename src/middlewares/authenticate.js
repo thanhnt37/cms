@@ -64,6 +64,7 @@ function* completeNewPassword({payload, type}) {
     } catch(e) {
         yield put(authenticateActions.responseCompleteNewPasswordError());
         yield put(globalMessageActions.newErrorMessage(e.message));
+        yield put(pageLoadingActions.stopPageLoading());
     }
 }
 
