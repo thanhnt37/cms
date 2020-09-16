@@ -2,6 +2,7 @@ import { put, call, throttle, takeEvery } from 'redux-saga/effects';
 
 import { constants as authenticateConstants, actions as authenticateActions } from '../actions/authenticate';
 import { actions  as globalMessageActions } from '../actions/globalMessages';
+import { actions  as pageLoadingActions } from '../actions/pageLoading';
 import { amplifyServices } from '../services/amplify';
 
 export const authenticate = [
@@ -39,6 +40,7 @@ function* login({payload, type}) {
     } catch(e) {
         yield put(authenticateActions.responseLoginError(false));
         yield put(globalMessageActions.newErrorMessage(e.message));
+        yield put(pageLoadingActions.stopPageLoading());
     }
 }
 

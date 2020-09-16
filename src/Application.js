@@ -95,6 +95,7 @@ class Application extends Component {
             return (
                 <div id="Application">
                     {this.state.pageLoading && <Loading />}
+                    { this.state.globalMessages.type && <GlobalMessage {...this.state.globalMessages} handleCloseToast={this._closeToast} /> }
 
                     <Login />
                 </div>

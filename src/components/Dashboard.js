@@ -9,7 +9,7 @@ export class DashboardContainer extends Component {
         this.props.stopPageLoading();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         this.props.stopPageLoading();
     }
 
