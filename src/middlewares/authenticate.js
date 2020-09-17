@@ -76,6 +76,7 @@ function* forgotPassword({payload, type}) {
     } catch(e) {
         yield put(authenticateActions.responseForgotPasswordError());
         yield put(globalMessageActions.newErrorMessage(e.message));
+        yield put(pageLoadingActions.stopPageLoading());
     }
 }
 
@@ -87,5 +88,6 @@ function* forgotPasswordSubmit({payload, type}) {
     } catch(e) {
         yield put(authenticateActions.responseForgotPasswordSubmitError());
         yield put(globalMessageActions.newErrorMessage(e.message));
+        yield put(pageLoadingActions.stopPageLoading());
     }
 }
