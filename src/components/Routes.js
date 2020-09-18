@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 
 //Routes container
 import Dashboard from "./Dashboard";
-import Articles from "./Articles";
+import Articles from "./articles/index";
 import Logout from "./Logout";
 import CompleteNewPassword from "./login/complete_new_password";
 

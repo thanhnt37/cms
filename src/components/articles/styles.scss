@@ -1,0 +1,31 @@
+#articles {
+    .articles__breadcrumb {
+        margin: 30px 0;
+        padding: 10px 20px;
+    }
+    .articles__content {
+        padding: 20px;
+
+        .articles__search-wrapper {
+            position: relative;
+
+            .articles__search-input {
+                margin-bottom: 25px;
+                max-width: 650px;
+            }
+            .articles__btn--create-new {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+        }
+        .articles__table--wrapper {
+            max-height: 500px;
+            overflow: auto;
+
+            a {
+                color: -webkit-link;
+            }
+        }
+    }
+}
