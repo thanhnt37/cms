@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import {Container, Paper, Breadcrumbs, TextField, Typography, Fab} from '@material-ui/core';
 import {Table, TableBody, TableCell, TableHead, TablePagination, TableRow} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add'
 import './styles.scss';
 
 const Articles = (props) => {
@@ -20,7 +19,7 @@ const Articles = (props) => {
 
     return (
         <Container id='articles'>
-            <Paper elevation={0} className='articles__breadcrumb'>
+            <Paper elevation={0} className='index-page__breadcrumb'>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/">
                         Dashboard
@@ -47,11 +46,11 @@ const Articles = (props) => {
                         size="medium"
                         color="primary"
                         aria-label="add"
-                        component="a"
-                        href="/articles/create"
+                        component="span"
                     >
-                        <AddIcon/>
-                        Create New
+                        <Link color="inherit" to="/articles/create">
+                            Create New
+                        </Link>
                     </Fab>
                 </div>
 
