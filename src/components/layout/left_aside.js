@@ -15,7 +15,7 @@ export class LeftAsideContainer extends Component {
 
     _changeRoute = () => {
         this.props.closeLeftMenu();
-        this.props.startPageLoading();
+        // this.props.startPageLoading();
     }
 
     render() {

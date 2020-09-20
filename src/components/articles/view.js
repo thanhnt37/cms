@@ -70,7 +70,7 @@ const Articles = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.slice(props.page * props.rowsPerPage, props.page * props.rowsPerPage + props.rowsPerPage).map(row => {
+                            {rows.slice(props.currentPage * props.pageSize, props.currentPage * props.pageSize + props.pageSize).map(row => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.slug} slug={row.slug}>
                                         {
@@ -99,8 +99,8 @@ const Articles = (props) => {
                         rowsPerPageOptions={[10, 20, 100]}
                         component="div"
                         count={rows.length}
-                        rowsPerPage={props.rowsPerPage}
-                        page={props.page}
+                        rowsPerPage={props.pageSize}
+                        page={props.currentPage}
                         backIconButtonProps={{
                             'aria-label': 'previous page',
                         }}

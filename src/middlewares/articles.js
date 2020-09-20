@@ -55,7 +55,7 @@ function* findArticle({payload, type}) {
 
 function* getListArticles({payload, type}) {
     try {
-        const articles = yield call(ArticleModel.get);
+        const articles = yield call(ArticleModel.get, payload.lastEvaluatedKey);
 
         yield put(articleActions.responseGetListArticlesSucceed(articles));
     } catch (e) {

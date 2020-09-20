@@ -27,13 +27,20 @@ export async function publish(data) {
     return true;
 }
 
-export async function get() {
-    let articles = await DynamoDBServices.scans(TABLE_NAME, [{attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"}], 100);
+export async function get(lastEvaluatedKey = {}) {
+    let articles = await DynamoDBServices.scans(
+        TABLE_NAME,
+        [{attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"}],
+        100,
+        lastEvaluatedKey,
+        ['id', 'slug', 'title', 'is_enabled', 'updated_at']
+    );
 
     return {
-        ScannedCount: articles.ScannedCount,
         Count: articles.Count,
-        Items: _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc'])
+        ScannedCount: articles.ScannedCount,
+        Items: _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']),
+        LastEvaluatedKey: articles.LastEvaluatedKey
     }
 }
 

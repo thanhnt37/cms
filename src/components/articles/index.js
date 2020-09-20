@@ -12,26 +12,26 @@ export class ArticlesComponent extends Component {
         super(props);
 
         this.state = {
-            page: 0,
-            rowsPerPage: 20,
+            pageSize: 10,
+            currentPage: props.articles.currentPage,
             articles: props.articles
         };
     }
 
     componentDidMount() {
-        this.props.requestGetListArticles();
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        this.props.stopPageLoading();
+        if(_.isEmpty(this.props.articles.Items)) {
+            this.props.startPageLoading();
+            this.props.requestGetListArticles();
+        }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-
         if(!_.isEmpty(nextProps.articles) && (nextProps.articles !== prevState.articles)) {
+            nextProps.stopPageLoading();
 
             return {
                 ...prevState,
+                currentPage: nextProps.articles.currentPage,
                 articles: nextProps.articles
             };
         }
@@ -40,16 +40,20 @@ export class ArticlesComponent extends Component {
     }
 
     _changePage = (event, newPage) => {
-        this.setState({
-            ...this.state,
-            page: newPage
-        });
+        let pageLimit = parseInt(this.state.articles.Count / this.state.pageSize);
+        console.log(!_.isEmpty(this.state.articles.LastEvaluatedKey), newPage, pageLimit)
+        if(!_.isEmpty(this.state.articles.LastEvaluatedKey) && ((newPage + 1) >= pageLimit)) {
+            this.props.requestGetListArticles(this.state.articles.LastEvaluatedKey);
+        }
+
+        this.props.requestChangePage(newPage);
     };
 
     _changeRowsPerPage = event => {
         this.setState({
             ...this.state,
-            rowsPerPage: event.target.value
+            pageSize: event.target.value,
+            currentPage: 0
         });
     };
 
@@ -69,8 +73,10 @@ const mapStateToProps = state => ({
 });
 
 const actions = {
+    startPageLoading: pageLoadingActions.startPageLoading,
     stopPageLoading: pageLoadingActions.stopPageLoading,
-    requestGetListArticles: articleActions.requestGetListArticles
+    requestGetListArticles: articleActions.requestGetListArticles,
+    requestChangePage: articleActions.requestChangePage,
 };
 
 export default connect(mapStateToProps, actions)(ArticlesComponent);

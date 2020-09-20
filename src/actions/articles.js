@@ -15,6 +15,10 @@ export const constants = {
     RESPONSE_GET_LIST_ARTICLES_SUCCEED: 'RESPONSE_GET_LIST_ARTICLES_SUCCEED',
     RESPONSE_GET_LIST_ARTICLES_FAILED: 'RESPONSE_GET_LIST_ARTICLES_FAILED',
 
+    REQUEST_CHANGE_PAGE: 'REQUEST_CHANGE_PAGE',
+    RESPONSE_CHANGE_PAGE_SUCCEED: 'RESPONSE_CHANGE_PAGE_SUCCEED',
+    RESPONSE_CHANGE_PAGE_FAILED: 'RESPONSE_CHANGE_PAGE_FAILED',
+
     REQUEST_ALL_ARTICLE_SLUGS: 'REQUEST_ALL_ARTICLE_SLUGS',
     RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED: 'RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED',
     RESPONSE_ALL_ARTICLE_SLUGS_FAILED: 'RESPONSE_ALL_ARTICLE_SLUGS_FAILED',
@@ -33,9 +37,13 @@ export const actions = {
     responseFindArticleSucceed: (article) => ({type: constants.RESPONSE_FIND_ARTICLE_SUCCEED, payload: {article}}),
     responseFindArticleFailed: () => ({type: constants.RESPONSE_FIND_ARTICLE_FAILED, payload: {}}),
 
-    requestGetListArticles: () => ({type: constants.REQUEST_GET_LIST_ARTICLES, payload: {}}),
+    requestGetListArticles: (lastEvaluatedKey = {}, params = {}) => ({type: constants.REQUEST_GET_LIST_ARTICLES, payload: {lastEvaluatedKey, params}}),
     responseGetListArticlesSucceed: (articles) => ({type: constants.RESPONSE_GET_LIST_ARTICLES_SUCCEED, payload: {articles}}),
     responseGetListArticlesFailed: () => ({type: constants.RESPONSE_GET_LIST_ARTICLES_FAILED, payload: {}}),
+
+    requestChangePage: (page) => ({type: constants.REQUEST_CHANGE_PAGE, payload: {page}}),
+    responseChangePageSucceed: () => ({type: constants.RESPONSE_CHANGE_PAGE_SUCCEED, payload: {}}),
+    responseChangePageFailed: () => ({type: constants.RESPONSE_CHANGE_PAGE_FAILED, payload: {}}),
 
     requestAllArticleSlugs: () => ({type: constants.REQUEST_ALL_ARTICLE_SLUGS, payload: {}}),
     responseAllArticleSlugsSucceed: (articles) => ({type: constants.RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED, payload: {articles}}),
