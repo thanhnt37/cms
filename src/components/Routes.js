@@ -7,6 +7,7 @@ import Logout from "./Logout";
 import Dashboard from "./Dashboard";
 import Articles from "./articles/index";
 import CreateArticle from "./article/create/index";
+import EditArticle from "./article/edit/index";
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
             <Route path='/logout' component={Logout}/>
 
             <Route path='/articles/create' component={CreateArticle}/>
+            <Route path='/articles/:slug' component={EditArticle}/>
             <Route path='/articles' component={Articles}/>
 
             <Route path='/' component={Dashboard}/>

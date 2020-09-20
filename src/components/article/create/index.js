@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import './styles.scss';
 import ArticleCreate from './view';
 import {actions as articleActions} from "../../../actions/articles";
 import {actions as pageLoadingActions} from "../../../actions/pageLoading";

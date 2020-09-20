@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import { Link } from "react-router-dom";
 
+import './styles.scss';
+
 const CreateArticle = (props) => {
     return (
         <Container id='create-article' className="create-article">
