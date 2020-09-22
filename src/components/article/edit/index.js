@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import ArticlesDetail from './view';
 import {actions as s3Actions} from "../../../actions/s3";
@@ -19,6 +20,7 @@ const DEFAULT_CREATE_PATH = 'create';
 export class ArticleComponent extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             allSlugs: props.allSlugs,
             article: {
@@ -27,13 +29,13 @@ export class ArticleComponent extends Component {
                 content: "No Content",
                 poster: "http://placehold.it/720x405",
                 thumbnail: "http://placehold.it/320x180",
-                tags: [],
                 is_enabled: "true",
                 published_at: "null",
                 viewed: 0,
                 voted: 0,
                 related_articles: "null",
                 ...props.article,
+                tags: _.isArray(props.article.slug) ? Object.values(JSON.parse(props.article.tags)) : [],
                 slug: props.match.params.slug,
             },
             previewModal: {
@@ -46,19 +48,18 @@ export class ArticleComponent extends Component {
     componentDidMount = async () => {
         // TODO: re-use api response
         let slug = this.state.article.slug;
-        if(slug !== DEFAULT_CREATE_PATH) {
+        if(this.props.article.slug !== this.state.article.slug) {
             this.props.startPageLoading();
-            this.props.requestAllArticleSlugs();
             this.props.requestFindArticle(slug);
-            this.props.requestS3Policy(slug);
         }
+
+        // cannot re-use s3 policy
+        this.props.requestS3Policy(slug);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        console.log(nextProps, prevState);
         if(nextProps.article === undefined) {
             nextProps.newErrorMessage("Error, article does not exist !!!");
-            nextProps.history.push("/articles");
             return prevState;
         }
 
@@ -74,7 +75,9 @@ export class ArticleComponent extends Component {
             let tags = JSON.parse(article.tags);
             article.tags = Object.values(tags);
 
-            nextProps.stopPageLoading();
+            if(_.isEmpty(prevState.allSlugs)) {
+                nextProps.requestAllArticleSlugs();
+            }
             return {
                 ...prevState,
                 article: article
@@ -82,6 +85,7 @@ export class ArticleComponent extends Component {
         }
 
         if(_.has(nextProps, 's3.fields.Policy') && (!_.has(prevState, 's3.fields.Policy') || (nextProps.s3.fields.Policy !== prevState.s3.fields.Policy))) {
+            nextProps.stopPageLoading();
             return {
                 ...prevState,
                 s3: nextProps.s3,
@@ -208,7 +212,7 @@ export class ArticleComponent extends Component {
         }
         content = content.innerHTML;
 
-        let slug = (this.state.article.slug === DEFAULT_CREATE_PATH) ? _.toLower(slugify(e.target.title.value, {remove: /[!@#$%^&*();:'"~`?.,<>//]/g})) : this.state.article.slug;
+        let slug = this.state.article.slug; // (this.state.article.slug === DEFAULT_CREATE_PATH) ? _.toLower(slugify(e.target.title.value, {remove: /[!@#$%^&*();:'"~`?.,<>//]/g})) : this.state.article.slug;
         let tags = this.state.article.tags;
         let tagsObject = {};
         tags.forEach(function (value, index) {
@@ -218,7 +222,7 @@ export class ArticleComponent extends Component {
         let article = {
             ...this.state.article,
             // TODO: check nếu là tạo mới thì mới generate new slug, cần check xem slug mới đã tồn tại trên dynamodb chưa ?
-            slug: slug,
+            // slug: slug,
             tags: JSON.stringify(tagsObject),
             content: content,
             table_of_contents: tableOfContents
@@ -232,19 +236,12 @@ export class ArticleComponent extends Component {
         }
 
         delete article.cover_image;
-        if(this.state.article.slug === DEFAULT_CREATE_PATH) {
-            this.props.requestCreateNewArticle(article);
-            return this.props.history.push("/articles");
-        } else {
-            this.props.requestUpdateArticle(article);
-        }
+        this.props.requestUpdateArticle(article);
     }
 
     render() {
-        if (this.state.article.slug === DEFAULT_CREATE_PATH) {
-            return (
-                <h1>Cho chut nhe !</h1>
-            );
+        if (this.props.article === undefined) {
+            return <Redirect to="/articles"/>
         } else {
             return (
                 <ArticlesDetail

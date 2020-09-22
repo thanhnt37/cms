@@ -15,9 +15,9 @@ export default [
 
 function* createNewArticle({payload, type}) {
     try {
-        const response = yield call(ArticleModel.create, payload.article);
+        const article = yield call(ArticleModel.create, payload.article);
 
-        yield put(articleActions.responseCreateNewArticleSucceed(response));
+        yield put(articleActions.responseCreateNewArticleSucceed(article));
         yield put(globalMessageActions.newSuccessMessage('Successfully, Article is created !!!'));
     } catch (e) {
         yield put(articleActions.responseCreateNewArticleFailed());
@@ -38,8 +38,9 @@ function* updateArticle({payload, type}) {
     } catch (e) {
         yield put(articleActions.responseUpdateArticleFailed());
         yield put(globalMessageActions.newErrorMessage('Failed, Article is not updated !!!'));
-        yield put(pageLoadingActions.stopPageLoading());
     }
+
+    yield put(pageLoadingActions.stopPageLoading());
 }
 
 function* findArticle({payload, type}) {

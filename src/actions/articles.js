@@ -26,11 +26,11 @@ export const constants = {
 
 export const actions = {
     requestCreateNewArticle: (article) => ({type: constants.REQUEST_CREATE_NEW_ARTICLE, payload: {article}}),
-    responseCreateNewArticleSucceed: (response) => ({type: constants.RESPONSE_CREATE_NEW_ARTICLE_SUCCEED, payload: {response}}),
+    responseCreateNewArticleSucceed: (article) => ({type: constants.RESPONSE_CREATE_NEW_ARTICLE_SUCCEED, payload: {article}}),
     responseCreateNewArticleFailed: () => ({type: constants.RESPONSE_CREATE_NEW_ARTICLE_FAILED, payload: {}}),
 
     requestUpdateArticle: (article) => ({type: constants.REQUEST_UPDATE_ARTICLE, payload: {article}}),
-    responseUpdateArticleSucceed: (response) => ({type: constants.RESPONSE_UPDATE_ARTICLE_SUCCEED, payload: {response}}),
+    responseUpdateArticleSucceed: (article) => ({type: constants.RESPONSE_UPDATE_ARTICLE_SUCCEED, payload: {article}}),
     responseUpdateArticleFailed: () => ({type: constants.RESPONSE_UPDATE_ARTICLE_FAILED, payload: {}}),
 
     requestFindArticle: (slug) => ({type: constants.REQUEST_FIND_ARTICLE, payload: {slug}}),

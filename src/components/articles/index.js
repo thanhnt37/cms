@@ -41,7 +41,6 @@ export class ArticlesComponent extends Component {
 
     _changePage = (event, newPage) => {
         let pageLimit = parseInt(this.state.articles.Count / this.state.pageSize);
-        console.log(!_.isEmpty(this.state.articles.LastEvaluatedKey), newPage, pageLimit)
         if(!_.isEmpty(this.state.articles.LastEvaluatedKey) && ((newPage + 1) >= pageLimit)) {
             this.props.requestGetListArticles(this.state.articles.LastEvaluatedKey);
         }
