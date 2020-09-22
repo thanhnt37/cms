@@ -108,6 +108,21 @@ export default (state = initState, action) => {
                 allSlugs: action.payload.articles.Items
             };
 
+        case constants.RESPONSE_PUBLISH_ARTICLE_SUCCEED:
+            let slug = action.payload.slug;
+            let Items = _.remove(state.index.Items, function(a) {
+                return (a.slug !== slug);
+            });
+
+            return {
+                ...state,
+                index: {
+                    ...state.index,
+                    Items: Items,
+                    Count: state.index.Count - 1,
+                }
+            }
+
         default:
             return state;
     }

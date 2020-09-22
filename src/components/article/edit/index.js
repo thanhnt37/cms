@@ -16,6 +16,7 @@ const slugify = require('slugify');
 slugify.extend({'đ': 'd', 'Đ': 'd', });
 
 const DEFAULT_CREATE_PATH = 'create';
+const NGUYEN_TAT_THANH = 'tatthanh.dev@gmail.com';
 
 export class ArticleComponent extends Component {
     constructor(props) {
@@ -42,6 +43,7 @@ export class ArticleComponent extends Component {
                 isOpen: false
             },
             s3: props.s3,
+            authenticate: props.authenticate,
         };
     }
 
@@ -168,7 +170,7 @@ export class ArticleComponent extends Component {
         });
     };
 
-    handleOpenPreview = () => {
+    _openPreview = () => {
         this.setState({
             ...this.state,
             previewModal: {
@@ -239,6 +241,15 @@ export class ArticleComponent extends Component {
         this.props.requestUpdateArticle(article);
     }
 
+    _publishArticle = async () => {
+        if(this.props.authenticate.authUser.attributes.email === NGUYEN_TAT_THANH) {
+            this.props.startPageLoading();
+            this.props.requestPublishArticle(this.state.article.slug);
+        } else {
+            this.props.newErrorMessage("ERROR, _____ ACCESS DENIED _____");
+        }
+    }
+
     render() {
         if (this.props.article === undefined) {
             return <Redirect to="/articles"/>
@@ -250,8 +261,10 @@ export class ArticleComponent extends Component {
                     changeDateTime={this._changeDateTime}
                     changeTags={this._changeTags}
                     changePreviewContent={this._changePreviewContent}
-                    handleOpenPreview={this.handleOpenPreview} closePreview={this._closePreview}
+                    openPreview={this._openPreview} closePreview={this._closePreview}
                     handleSubmit={this.handleSubmit}
+                    publishArticle={this._publishArticle}
+                    showPublishButton={this.props.authenticate.authUser.attributes.email === NGUYEN_TAT_THANH}
                     DEFAULT_CREATE_PATH={DEFAULT_CREATE_PATH}
                 />
             );
@@ -262,7 +275,8 @@ export class ArticleComponent extends Component {
 const mapStateToProps = state => ({
     s3: state.s3,
     article: state.articles.detail,
-    allSlugs: state.articles.allSlugs
+    allSlugs: state.articles.allSlugs,
+    authenticate: state.authenticate
 });
 
 const actions = {
@@ -271,6 +285,7 @@ const actions = {
     requestUpdateArticle: articleActions.requestUpdateArticle,
     requestFindArticle: articleActions.requestFindArticle,
     requestAllArticleSlugs: articleActions.requestAllArticleSlugs,
+    requestPublishArticle: articleActions.requestPublishArticle,
     startPageLoading: pageLoadingActions.startPageLoading,
     stopPageLoading: pageLoadingActions.stopPageLoading,
     newErrorMessage: globalMessageActions.newErrorMessage

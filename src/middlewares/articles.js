@@ -11,6 +11,7 @@ export default [
     throttle(3000, articleConstants.REQUEST_FIND_ARTICLE, findArticle),
     throttle(3000, articleConstants.REQUEST_GET_LIST_ARTICLES, getListArticles),
     throttle(3000, articleConstants.REQUEST_ALL_ARTICLE_SLUGS, allArticleSlugs),
+    throttle(3000, articleConstants.REQUEST_PUBLISH_ARTICLE, publishArticle),
 ];
 
 function* createNewArticle({payload, type}) {
@@ -74,4 +75,18 @@ function* allArticleSlugs({payload, type}) {
         yield put(articleActions.responseAllArticleSlugsFailed());
         yield put(pageLoadingActions.stopPageLoading());
     }
+}
+
+function* publishArticle({payload, type}) {
+    try {
+        yield call(ArticleModel.publish, payload.slug);
+
+        yield put(articleActions.responsePublishArticleSucceed(payload.slug));
+        yield put(globalMessageActions.newSuccessMessage('Successfully, Article is published !!!'));
+    } catch (e) {
+        yield put(articleActions.responsePublishArticleFailed());
+        yield put(globalMessageActions.newErrorMessage('Failed, something went wrong !!!'));
+    }
+
+    yield put(pageLoadingActions.stopPageLoading());
 }

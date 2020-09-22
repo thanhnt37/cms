@@ -267,7 +267,7 @@ const ArticlesDetail = (props) => {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" style={{color: '#4caf50', borderColor: '#4caf50'}} onClick={props.handleOpenPreview}>
+                            <Button variant="outlined" style={{color: '#4caf50', borderColor: '#4caf50'}} onClick={props.openPreview}>
                                 Preview
                             </Button>
                         </Grid>
@@ -276,6 +276,15 @@ const ArticlesDetail = (props) => {
                                 Submit
                             </Button>
                         </Grid>
+                        {
+                            props.showPublishButton &&
+                                <Grid item>
+                                    <Button variant="outlined" color="warning" onClick={props.publishArticle}>
+                                        Go Production
+                                    </Button>
+                                </Grid>
+                        }
+
                     </Grid>
                 </form>
 

@@ -22,6 +22,10 @@ export const constants = {
     REQUEST_ALL_ARTICLE_SLUGS: 'REQUEST_ALL_ARTICLE_SLUGS',
     RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED: 'RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED',
     RESPONSE_ALL_ARTICLE_SLUGS_FAILED: 'RESPONSE_ALL_ARTICLE_SLUGS_FAILED',
+
+    REQUEST_PUBLISH_ARTICLE: 'REQUEST_PUBLISH_ARTICLE',
+    RESPONSE_PUBLISH_ARTICLE_SUCCEED: 'RESPONSE_PUBLISH_ARTICLE_SUCCEED',
+    RESPONSE_PUBLISH_ARTICLE_FAILED: 'RESPONSE_PUBLISH_ARTICLE_FAILED',
 };
 
 export const actions = {
@@ -48,4 +52,8 @@ export const actions = {
     requestAllArticleSlugs: () => ({type: constants.REQUEST_ALL_ARTICLE_SLUGS, payload: {}}),
     responseAllArticleSlugsSucceed: (articles) => ({type: constants.RESPONSE_ALL_ARTICLE_SLUGS_SUCCEED, payload: {articles}}),
     responseAllArticleSlugsFailed: () => ({type: constants.RESPONSE_ALL_ARTICLE_SLUGS_FAILED, payload: {}}),
+
+    requestPublishArticle: (slug) => ({type: constants.REQUEST_PUBLISH_ARTICLE, payload: {slug}}),
+    responsePublishArticleSucceed: (slug) => ({type: constants.RESPONSE_PUBLISH_ARTICLE_SUCCEED, payload: {slug}}),
+    responsePublishArticleFailed: () => ({type: constants.RESPONSE_PUBLISH_ARTICLE_FAILED, payload: {}}),
 };

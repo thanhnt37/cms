@@ -19,11 +19,13 @@ export async function update(slug, data) {
     return await DynamoDBServices.update(TABLE_NAME, {slug: slug}, data);
 }
 
-export async function publish(data) {
+export async function publish(slug) {
     // TODO: data validation
-    data.is_published = 'true';
-    await DynamoDBServices.create(TABLE_NAME.replace("dev", "prod"), data);
-    await DynamoDBServices.update(TABLE_NAME, data);
+    let article = await findBySlug(slug);
+    article.is_published = 'true';
+    await DynamoDBServices.create(TABLE_NAME.replace("dev", "prod"), article);
+    await DynamoDBServices.update(TABLE_NAME, {slug: slug}, {is_published: "true"});
+
     return true;
 }
 
