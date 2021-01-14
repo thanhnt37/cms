@@ -195,6 +195,20 @@ export class ArticleComponent extends Component {
         let content = document.createElement('div');
         content.innerHTML = this.state.article.content;
 
+        // remove froala signature & add the article footer
+        let p = content.getElementsByTagName('p');
+        let lastPTag = p[p.length - 1];
+        if(lastPTag.getAttribute('data-f-id') === "pbf") {
+            lastPTag.remove();
+        }
+        lastPTag = p[p.length - 1];
+        if(lastPTag.getAttribute('class') !== "signature") {
+            let signature = document.createElement("div");
+            signature.innerHTML = `<p class="signature" style="text-align: right;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
+            content.appendChild(signature);
+        }
+
+        // adding table of contents
         let tableOfContents = "<ol>";
         let h2Tags = content.getElementsByTagName('h2');
         for (let i = 0; i < h2Tags.length; i++) {
