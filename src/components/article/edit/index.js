@@ -205,7 +205,7 @@ export class ArticleComponent extends Component {
         lastPTag = p[p.length - 1];
         if(lastPTag.getAttribute('class') !== "signature") {
             let signature = document.createElement("div");
-            signature.innerHTML = `<p class="signature" style="text-align: right;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
+            signature.innerHTML = `<p class="signature" style="text-align: right; font-size: 14px;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
             content.appendChild(signature);
         }
 
