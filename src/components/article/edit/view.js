@@ -184,6 +184,20 @@ const ArticlesDetail = (props) => {
                                             onChange={props.changeTextField}
                                         />
                                     </Grid>
+                                    {
+                                        props.showPublishButton &&
+                                        <Grid item xs={12} style={{marginTop: '20px'}}>
+                                            <InputLabel htmlFor="rendering_style">
+                                                Rendering Style
+                                            </InputLabel>
+                                            <TextField
+                                                type="number"
+                                                name='rendering_style'
+                                                value={props.article.rendering_style || 1}
+                                                onChange={props.changeTextField}
+                                            />
+                                        </Grid>
+                                    }
                                 </Grid>
                             </MuiPickersUtilsProvider>
                         </Grid>

@@ -34,6 +34,7 @@ export class ArticleComponent extends Component {
                 published_at: "null",
                 viewed: 0,
                 voted: 0,
+                rendering_style: 1,
                 related_articles: "null",
                 ...props.article,
                 tags: _.isArray(props.article.slug) ? Object.values(JSON.parse(props.article.tags)) : [],
