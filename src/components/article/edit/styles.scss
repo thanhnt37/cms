@@ -30,6 +30,13 @@
         }
         .fr-view {
             line-height: 25px;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+                border-bottom: 1px solid #e0e02a;
+                padding-bottom: 2px;
+            }
         }
         pre {
             max-height: 30em;
@@ -47,6 +54,12 @@
     padding: 30px;
     text-align: justify;
 
+    a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid #e0e02a;
+        padding-bottom: 2px;
+    }
     .title {
         text-align: left;
         font-size: 2em;
