@@ -38,9 +38,9 @@
         "clean-tatthanh.dev-cms": "aws cloudfront create-invalidation --distribution-id E17C9U202A88W8 --paths /\\* --profile tatthanh.dev",
         "deploy-tatthanh.dev-cms": "rm -rf build/ && npm run build && npm run upload-tatthanh.dev-cms && npm run clean-tatthanh.dev-cms",
         "------------------": "------------------",
-        "upload-hatdieubactam.com-cms": "aws s3 sync build/ s3://cms.hatdieubactam.com --acl public-read --profile tatthanh.dev",
-        "clean-hatdieubactam.com-cms": "aws cloudfront create-invalidation --distribution-id E314OKR9DTO2E2 --paths /\\* --profile tatthanh.dev",
-        "deploy-hatdieubactam.com-cms": "rm -rf build/ && npm run build && npm run upload-hatdieubactam.com-cms && npm run clean-hatdieubactam.com-cms"
+        "upload-cms.hatdieubactam.vn": "aws s3 sync build/ s3://cms.hatdieubactam.vn --profile tatthanh.dev",
+        "clean-cms.hatdieubactam.vn": "aws cloudfront create-invalidation --distribution-id E12ADDSJOLZ8C8 --paths /\\* --profile tatthanh.dev",
+        "deploy-cms.hatdieubactam.vn": "rm -rf build/ && npm run build && npm run upload-cms.hatdieubactam.vn && npm run clean-cms.hatdieubactam.vn"
     },
     "eslintConfig": {
         "extends": "react-app"
