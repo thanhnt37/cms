@@ -205,7 +205,7 @@ export class ArticleComponent extends Component {
         lastPTag = p[p.length - 1];
         if(lastPTag.getAttribute('class') !== "signature") {
             let signature = document.createElement("div");
-            signature.innerHTML = `<p class="signature" style="text-align: right; font-size: 14px;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
+            signature.innerHTML = `<p class="signature" style="text-align: right; font-size: 14px;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn" title="Hạt Điều Bác Tâm">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
             content.appendChild(signature);
         }
 
@@ -220,12 +220,22 @@ export class ArticleComponent extends Component {
         }
         tableOfContents += "</ol>";
 
+        // validate anchor tags
+        let aTags = content.getElementsByTagName('a');
+        for (let i = 0; i < aTags.length; i++) {
+            let item = aTags[i];
+            content.getElementsByTagName('a')[i].setAttribute("title", item.innerHTML);
+        }
+
+        // validate image tags
         let imgTags = content.getElementsByTagName('img');
         for (let i = 0; i < imgTags.length; i++) {
             let item = imgTags[i];
             let src = item.src;
             src = src.replace(`s3.ap-southeast-1.amazonaws.com/${process.env.REACT_APP_AWS_S3_BUCKET_NAME}`, process.env.REACT_APP_AWS_S3_ASSET_DOMAIN);
             content.getElementsByTagName('img')[i].setAttribute("src", src);
+            content.getElementsByTagName('img')[i].setAttribute("alt", this.state.article.title);
+            content.getElementsByTagName('img')[i].setAttribute("title", this.state.article.title);
         }
         content = content.innerHTML;
 
