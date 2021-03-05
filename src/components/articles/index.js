@@ -14,14 +14,15 @@ export class ArticlesComponent extends Component {
         this.state = {
             pageSize: 10,
             currentPage: props.articles.currentPage,
-            articles: props.articles
+            articles: props.articles,
+            authenticate: props.authenticate
         };
     }
 
     componentDidMount() {
         if(_.isEmpty(this.props.articles.Items)) {
             this.props.startPageLoading();
-            this.props.requestGetListArticles();
+            this.props.requestGetListArticles({}, this.props.authenticate.authUser.attributes.email);
         }
     }
 
@@ -42,7 +43,7 @@ export class ArticlesComponent extends Component {
     _changePage = (event, newPage) => {
         let pageLimit = parseInt(this.state.articles.Count / this.state.pageSize);
         if(!_.isEmpty(this.state.articles.LastEvaluatedKey) && ((newPage + 1) >= pageLimit)) {
-            this.props.requestGetListArticles(this.state.articles.LastEvaluatedKey);
+            this.props.requestGetListArticles(this.state.articles.LastEvaluatedKey, this.props.authenticate.authUser.attributes.email);
         }
 
         this.props.requestChangePage(newPage);
@@ -62,13 +63,15 @@ export class ArticlesComponent extends Component {
                 {...this.state}
                 changePage={this._changePage}
                 changeRowsPerPage={this._changeRowsPerPage}
+                currentUserEmail={this.props.authenticate.authUser.attributes.email}
             />
         );
     }
 }
 
 const mapStateToProps = state => ({
-    articles: state.articles.index
+    articles: state.articles.index,
+    authenticate: state.authenticate
 });
 
 const actions = {

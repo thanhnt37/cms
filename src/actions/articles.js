@@ -41,7 +41,7 @@ export const actions = {
     responseFindArticleSucceed: (article) => ({type: constants.RESPONSE_FIND_ARTICLE_SUCCEED, payload: {article}}),
     responseFindArticleFailed: () => ({type: constants.RESPONSE_FIND_ARTICLE_FAILED, payload: {}}),
 
-    requestGetListArticles: (lastEvaluatedKey = {}, params = {}) => ({type: constants.REQUEST_GET_LIST_ARTICLES, payload: {lastEvaluatedKey, params}}),
+    requestGetListArticles: (lastEvaluatedKey = {}, author = {}) => ({type: constants.REQUEST_GET_LIST_ARTICLES, payload: {lastEvaluatedKey, author}}),
     responseGetListArticlesSucceed: (articles) => ({type: constants.RESPONSE_GET_LIST_ARTICLES_SUCCEED, payload: {articles}}),
     responseGetListArticlesFailed: () => ({type: constants.RESPONSE_GET_LIST_ARTICLES_FAILED, payload: {}}),
 

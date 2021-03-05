@@ -25,7 +25,8 @@ export class CreateArticleComponent extends Component {
                 published_at: "null",
                 viewed: 0,
                 voted: 0,
-                related_articles: "null"
+                related_articles: "null",
+                author: props.authenticate.authUser.attributes.email
             }
         };
     }
@@ -72,6 +73,7 @@ export class CreateArticleComponent extends Component {
 }
 
 const mapStateToProps = state => ({
+    authenticate: state.authenticate
 });
 
 const actions = {

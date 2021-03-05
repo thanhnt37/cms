@@ -14,7 +14,8 @@ const Articles = (props) => {
             label: 'is Enabled',
             width: 100,
             align: 'right',
-        }
+        },
+        { id: 'author', label: 'Author', width: 100 }
     ];
 
     return (
@@ -72,17 +73,20 @@ const Articles = (props) => {
                         <TableBody>
                             {rows.slice(props.currentPage * props.pageSize, props.currentPage * props.pageSize + props.pageSize).map(row => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.slug} slug={row.slug}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.slug} slug={row.slug} className={(row.author && props.currentUserEmail === row.author) ? "highlight" : ''}>
                                         {
                                             columns.map(column => {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {
-                                                            column.id === 'title' ?
-                                                                <Link to={`/articles/${row.slug}`}>{value}</Link> :
+                                                            (column.id === 'title') ?
+                                                                (row.author && props.currentUserEmail === row.author) ?
+                                                                    <Link to={`/articles/${row.slug}`}>{value}</Link> :
+                                                                    value
+                                                                :
                                                                 column.id === 'is_enabled' ?
-                                                                    <span style={{color: (value === 'true') ? "#4caf50" : "black"}}>{value}</span> :
+                                                                    <span style={{color: (value === 'true') ? "#4caf50" : ""}}>{value}</span> :
                                                                     value
                                                         }
                                                     </TableCell>

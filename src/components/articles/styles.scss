@@ -19,8 +19,20 @@
         .articles__table--wrapper {
             overflow: auto;
 
+            table {
+                tr {
+                    td {
+                        color: #ccc;
+                    }
+                }
+                tr.highlight {
+                    td {
+                        color: black;
+                    }
+                }
+            }
             a {
-                color: -webkit-link;
+                color: blue;
             }
         }
     }

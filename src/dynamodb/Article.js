@@ -29,19 +29,33 @@ export async function publish(slug) {
     return true;
 }
 
-export async function get(lastEvaluatedKey = {}) {
+export async function get(lastEvaluatedKey = {}, author = null) {
     let articles = await DynamoDBServices.scans(
         TABLE_NAME,
         [{attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"}],
         100,
         lastEvaluatedKey,
-        ['id', 'slug', 'title', 'is_enabled', 'updated_at']
+        ['id', 'slug', 'title', 'is_enabled', 'updated_at', 'author']
     );
+    let items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
+
+    if(author) {
+        let first = [];
+        let second = [];
+        _.forEach(items, function(article) {
+            if(article.author === author) {
+                first.push(article);
+            } else {
+                second.push(article);
+            }
+        });
+        items = [...first, ...second];
+    }
 
     return {
         Count: articles.Count,
         ScannedCount: articles.ScannedCount,
-        Items: _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']),
+        Items: items,
         LastEvaluatedKey: articles.LastEvaluatedKey
     }
 }
