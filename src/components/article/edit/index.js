@@ -74,6 +74,11 @@ export class ArticleComponent extends Component {
         }
 
         if(!_.isEmpty(nextProps.article) && (nextProps.article.title !== prevState.article.title)) {
+            if((nextProps.article.author !== nextProps.authenticate.authUser.attributes.email) && (nextProps.authenticate.authUser.attributes.email !== 'tatthanh.dev@gmail.com')) {
+                // show message then redirect from view
+                nextProps.newErrorMessage("Access Denied, you are not the author !!!");
+            }
+
             let article = nextProps.article;
             let tags = JSON.parse(article.tags);
             article.tags = Object.values(tags);
@@ -278,7 +283,7 @@ export class ArticleComponent extends Component {
     }
 
     render() {
-        if (this.props.article === undefined) {
+        if ((this.props.article === undefined) || (!_.isEmpty(this.props.article) && (this.props.authenticate.authUser.attributes.email !== 'tatthanh.dev@gmail.com') && (this.props.article.author !== this.props.authenticate.authUser.attributes.email))) {
             return <Redirect to="/articles"/>
         } else {
             return (

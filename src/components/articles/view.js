@@ -73,7 +73,7 @@ const Articles = (props) => {
                         <TableBody>
                             {rows.slice(props.currentPage * props.pageSize, props.currentPage * props.pageSize + props.pageSize).map(row => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.slug} slug={row.slug} className={(row.author && props.currentUserEmail === row.author) ? "highlight" : ''}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.slug} slug={row.slug} className={((props.currentUserEmail === 'tatthanh.dev@gmail.com') || (row.author && props.currentUserEmail === row.author)) ? "highlight" : ''}>
                                         {
                                             columns.map(column => {
                                                 const value = row[column.id];
@@ -81,7 +81,7 @@ const Articles = (props) => {
                                                     <TableCell key={column.id} align={column.align}>
                                                         {
                                                             (column.id === 'title') ?
-                                                                (row.author && props.currentUserEmail === row.author) ?
+                                                                ((props.currentUserEmail === 'tatthanh.dev@gmail.com') || (row.author && props.currentUserEmail === row.author)) ?
                                                                     <Link to={`/articles/${row.slug}`}>{value}</Link> :
                                                                     value
                                                                 :
