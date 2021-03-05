@@ -198,15 +198,17 @@ export class ArticleComponent extends Component {
 
         // remove froala signature & add the article footer
         let p = content.getElementsByTagName('p');
-        let lastPTag = p[p.length - 1];
-        if(lastPTag.getAttribute('data-f-id') === "pbf") {
-            lastPTag.remove();
-        }
-        lastPTag = p[p.length - 1];
-        if(lastPTag.getAttribute('class') !== "signature") {
-            let signature = document.createElement("div");
-            signature.innerHTML = `<p class="signature" style="text-align: right; font-size: 14px;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn" title="Hạt Điều Bác Tâm">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
-            content.appendChild(signature);
+        if(p.length > 1) {
+            let lastPTag = p[p.length - 1];
+            if(lastPTag.getAttribute('data-f-id') === "pbf") {
+                lastPTag.remove();
+            }
+            lastPTag = p[p.length - 1];
+            if(lastPTag.getAttribute('class') !== "signature") {
+                let signature = document.createElement("div");
+                signature.innerHTML = `<p class="signature" style="text-align: right; font-size: 14px;"><em>Thanks for your reading !<br>from <a href="//hatdieubactam.vn" title="Hạt Điều Bác Tâm">Hạt Điều Bác Tâm</a> with&nbsp;</em><span style="color: red;"><em>♥</em></span></p>`;
+                content.appendChild(signature);
+            }
         }
 
         // adding table of contents
