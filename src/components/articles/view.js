@@ -80,14 +80,16 @@ const Articles = (props) => {
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {
-                                                            (column.id === 'title') ?
+                                                            column.id === 'title' ?
                                                                 ((props.currentUserEmail === 'tatthanh.dev@gmail.com') || (row.author && props.currentUserEmail === row.author)) ?
                                                                     <Link to={`/articles/${row.slug}`}>{value}</Link> :
                                                                     value
                                                                 :
                                                                 column.id === 'is_enabled' ?
                                                                     <span style={{color: (value === 'true') ? "#4caf50" : ""}}>{value}</span> :
-                                                                    value
+                                                                    column.id === 'author' ?
+                                                                        value.substring(0, 8) + "****" :
+                                                                        value
                                                         }
                                                     </TableCell>
                                                 );
