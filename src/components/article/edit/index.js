@@ -30,7 +30,8 @@ export class ArticleComponent extends Component {
                 content: "No Content",
                 poster: "http://placehold.it/720x405",
                 thumbnail: "http://placehold.it/320x180",
-                is_enabled: "true",
+                is_enabled: "false",
+                is_featured: "false",
                 published_at: "null",
                 viewed: 0,
                 voted: 0,
@@ -122,6 +123,8 @@ export class ArticleComponent extends Component {
             article['poster'] = e.target.files[0];
         } else if(e.target.name === 'is_enabled') {
             article['is_enabled'] = e.target.checked.toString();
+        } else if(e.target.name === 'is_featured') {
+            article['is_featured'] = e.target.checked.toString();
         } else if(e.target.name === 'tags') {
             let tmpTags = e.target.value;
             _.remove(tmpTags, function(i) {

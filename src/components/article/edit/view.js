@@ -184,16 +184,29 @@ const ArticlesDetail = (props) => {
                                             onChange={props.changeTextField}
                                         />
                                     </Grid>
+                                    <Grid item xs={12} style={{marginTop: '20px'}}>
+                                        <InputLabel htmlFor="rendering_style">
+                                            Rendering Style
+                                        </InputLabel>
+                                        <TextField
+                                            type="number"
+                                            name='rendering_style'
+                                            value={props.article.rendering_style || 1}
+                                            onChange={props.changeTextField}
+                                        />
+                                    </Grid>
                                     {
                                         props.showPublishButton &&
                                         <Grid item xs={12} style={{marginTop: '20px'}}>
-                                            <InputLabel htmlFor="rendering_style">
-                                                Rendering Style
+                                            <InputLabel htmlFor="is_featured">
+                                                is Featured
                                             </InputLabel>
-                                            <TextField
-                                                type="number"
-                                                name='rendering_style'
-                                                value={props.article.rendering_style || 1}
+                                            <FormControlLabel
+                                                checked={JSON.parse(props.article.is_featured || "false")}
+                                                control={<Switch size="medium" color="primary" />}
+                                                margin="normal"
+                                                id="is_featured"
+                                                name="is_featured"
                                                 onChange={props.changeTextField}
                                             />
                                         </Grid>
