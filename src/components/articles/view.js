@@ -9,6 +9,7 @@ const Articles = (props) => {
     const columns = [
         { id: 'title', label: 'Title' },
         { id: 'updated_at', label: 'Updated At', width: 175 },
+        { id: 'words_count', label: 'Words Count', width: 100 },
         {
             id: 'is_enabled',
             label: 'is Enabled',

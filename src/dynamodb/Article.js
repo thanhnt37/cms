@@ -35,7 +35,7 @@ export async function get(lastEvaluatedKey = {}, author = null) {
         [{attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"}],
         100,
         lastEvaluatedKey,
-        ['id', 'slug', 'title', 'is_enabled', 'updated_at', 'author']
+        ['id', 'slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'author']
     );
     let items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
 
