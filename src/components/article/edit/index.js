@@ -231,15 +231,27 @@ export class ArticleComponent extends Component {
         tableOfContents += "</ol>";
 
         // validate anchor tags
+        let linksOut = [];
         let aTags = content.getElementsByTagName('a');
         for (let i = 0; i < aTags.length; i++) {
             let item = aTags[i];
-            content.getElementsByTagName('a')[i].setAttribute("title", item.innerHTML);
+            let pathname = item.pathname;
 
+            content.getElementsByTagName('a')[i].setAttribute("title", item.innerHTML);
             if((item.href.indexOf('hatdieubactam.vn') === -1) && (item.href.indexOf('127.0.0.1') === -1) && (item.href.indexOf('localhost') === -1)) {
+                // external links --> set nofollow, open in new tab
                 content.getElementsByTagName('a')[i].setAttribute("rel", "noopener noreferrer nofollow");
                 content.getElementsByTagName('a')[i].setAttribute("target", "_blank");
+                pathname = item.href;
             }
+
+            // statistic links out
+            linksOut.push(
+                {
+                    text: item.innerHTML,
+                    url: pathname,
+                }
+            );
         }
 
         // validate image tags
@@ -267,7 +279,8 @@ export class ArticleComponent extends Component {
             // slug: slug,
             tags: JSON.stringify(tagsObject),
             content: content,
-            table_of_contents: tableOfContents
+            table_of_contents: tableOfContents,
+            links_out: JSON.stringify(linksOut)
         };
 
         if(typeof(article.poster) === 'object') {
