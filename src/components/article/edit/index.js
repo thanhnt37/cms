@@ -264,6 +264,11 @@ export class ArticleComponent extends Component {
             content.getElementsByTagName('img')[i].setAttribute("alt", this.state.article.title);
             content.getElementsByTagName('img')[i].setAttribute("title", this.state.article.title);
         }
+
+        // words counting
+        let wordsCount = content.innerText.split(' ').length;
+
+        // finish content validation
         content = content.innerHTML;
 
         let slug = this.state.article.slug; // (this.state.article.slug === DEFAULT_CREATE_PATH) ? _.toLower(slugify(e.target.title.value, {remove: /[!@#$%^&*();:'"~`?.,<>//]/g})) : this.state.article.slug;
@@ -280,7 +285,8 @@ export class ArticleComponent extends Component {
             tags: JSON.stringify(tagsObject),
             content: content,
             table_of_contents: tableOfContents,
-            links_out: JSON.stringify(linksOut)
+            words_count: wordsCount,
+            links_out: JSON.stringify(linksOut),
         };
 
         if(typeof(article.poster) === 'object') {
