@@ -235,6 +235,11 @@ export class ArticleComponent extends Component {
         for (let i = 0; i < aTags.length; i++) {
             let item = aTags[i];
             content.getElementsByTagName('a')[i].setAttribute("title", item.innerHTML);
+
+            if((item.href.indexOf('hatdieubactam.vn') === -1) && (item.href.indexOf('127.0.0.1') === -1) && (item.href.indexOf('localhost') === -1)) {
+                content.getElementsByTagName('a')[i].setAttribute("rel", "noopener noreferrer nofollow");
+                content.getElementsByTagName('a')[i].setAttribute("target", "_blank");
+            }
         }
 
         // validate image tags
