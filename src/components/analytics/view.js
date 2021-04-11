@@ -3,15 +3,14 @@ import {Link} from "react-router-dom";
 import {Breadcrumbs, Container, Paper, Typography} from '@material-ui/core';
 import './styles.scss';
 
+const _ = require('lodash');
+
 const ArticleAnalysis = (props) => {
 
     let articles = props.articles;
-    let data = [];
-    for(let i = 0; i < articles.Items.length; i++) {
-        // if(i >= 1) {
-        //     break;
-        // }
+    let data = {};
 
+    for(let i = 0; i < articles.Items.length; i++) {
         let article = articles.Items[i];
 
         // keyword analytic
@@ -34,54 +33,52 @@ const ArticleAnalysis = (props) => {
             );
         }
 
-        // content analytics
-        // console.log(article.content);
-        // let content = document.createElement('div');
-        // content.innerHTML = article.content;
-        // let p = content.getElementsByTagName('p');
-        // console.log(p[0]);
-
-
-        data.push(
-            {
-                slug: article.slug,
-                title: article.title,
-                word_count: 789,
-                keywords: {
-                    main: mainTag,
-                    sub: subTags
-                },
-                links_in: [
-                    {
-                        text: 'cách làm hạt điều rang',
-                        url: '/blog/hat-dieu-rang-muoi-mon-an-vat-dinh-duong-quoc-dan'
-                    },
-                    {
-                        text: 'hạt điều rang',
-                        url: '/blog/hat-dieu-rang-muoi-mon-an-vat-dinh-duong-quoc-dan'
-                    },
-                ],
-                links_out: [
-                    {
-                        text: 'sữa hạt điều',
-                        url: '/blog/sua-hat-dieu-cong-thuc-cho-mot-ly-sua-chat-luong-la-gi'
-                    },
-                    {
-                        text: 'sữa điều tươi',
-                        url: '/blog/sua-hat-dieu-cong-thuc-cho-mot-ly-sua-chat-luong-la-gi'
-                    },
-                    {
-                        text: 'sữa hạt điều',
-                        url: '/blog/sua-hat-dieu-cong-thuc-cho-mot-ly-sua-chat-luong-la-gi'
-                    },
-                    {
-                        text: 'sữa điều tươi',
-                        url: '/blog/sua-hat-dieu-cong-thuc-cho-mot-ly-sua-chat-luong-la-gi'
-                    },
-                ]
+        let linksOut = JSON.parse(article.links_out || '[]');
+        for(let j = 0; j < linksOut.length; j++) {
+            let link = linksOut[j];
+            if(_.startsWith(link.url, '/blog/')) {
+                let target = link.url.split("/")[2];
+                let linkIn = {
+                    text: link.text,
+                    url: `/blog/${article.slug}` // nhằm chỉ ra backlink này đến từ đâu?
+                };
+                if(_.has(data, target)) {
+                    if(_.has(data, `${target}.links_in`)) {
+                        data[target].links_in.push(linkIn);
+                    } else {
+                        data[target].links_in = [linkIn];
+                    }
+                } else {
+                    data[target] = {
+                        slug: `${article.slug}`,
+                        title: `a bug from ${article.title}`,
+                        word_count: 'not_counted',
+                        keywords: {
+                            main: {},
+                            sub: []
+                        },
+                        links_out: [],
+                        links_in: [linkIn]
+                    }
+                }
             }
-        );
+        }
+
+
+        data[article.slug] = {
+            ...data[article.slug],
+
+            slug: article.slug,
+            title: article.title,
+            word_count: article.words_count || 'not_counted',
+            keywords: {
+                main: mainTag,
+                sub: subTags
+            },
+            links_out: linksOut,
+        };
     }
+    data = Object.values(data);
 
     const _renderSubKeyword = (subKeywords = []) => {
         let html = [];
@@ -106,7 +103,7 @@ const ArticleAnalysis = (props) => {
 
             html.push(
                 <li>
-                    <a href={link.url} title={link.url} className="link" target="_blank">{link.text}</a>
+                    <a href={link.url} title={link.url} className="link" target="_blank" rel="noopener noreferrer">{link.text}</a>
                 </li>
             );
         }
