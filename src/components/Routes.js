@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import CompleteNewPassword from "./login/complete_new_password";
 import Logout from "./Logout";
 import Dashboard from "./Dashboard";
+import Analytics from "./analytics/index";
 import Articles from "./articles/index";
 import CreateArticle from "./article/create/index";
 import EditArticle from "./article/edit/index";
@@ -18,6 +19,8 @@ const AppRoutes = () => {
             <Route path='/articles/create' component={CreateArticle}/>
             <Route path='/articles/:slug' component={EditArticle}/>
             <Route path='/articles' component={Articles}/>
+
+            <Route path='/analytics' component={Analytics}/>
 
             <Route path='/' component={Dashboard}/>
         </Switch>

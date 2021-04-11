@@ -1,0 +1,96 @@
+#article-analysis {
+    margin-bottom: 100px;
+
+    h1 {
+        text-align: center;
+    }
+    .content {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            tr:nth-child(even) {
+                background-color: #e8e8e8;
+            }
+            td, th {
+                border: 1px solid #dddddd;
+                padding: 0;
+                text-align: left;
+                vertical-align: initial;
+            }
+            th {
+                text-align: center;
+                vertical-align: middle;
+            }
+            td.title {
+                padding-left: 15px;
+                width: 200px;
+            }
+            td.word-count {
+                width: 75px;
+                text-align: center;
+
+                span {
+                    background: white;
+                    padding: 5px 10px;
+                    border-radius: 30px;
+                }
+            }
+            td.links_in, td.links_out {
+                width: 200px;
+
+                ul {
+                    margin: 0;
+                    padding-left: 30px;
+
+                    li {
+                        margin-bottom: 5px;
+
+                        a {
+                            color: blue;
+                        }
+                    }
+                }
+            }
+            td.keywords {
+                padding-left: 15px;
+
+                .main {
+                    text-align: center;
+                    border: 1px solid rgb(198, 151, 51);
+                    width: fit-content;
+                    padding: 5px 0 5px 15px;
+                    border-radius: 30px;
+
+                    .volume {
+                        font-size: 14px;
+                        background: rgb(198, 151, 51);
+                        margin-left: 10px;
+                        padding: 5px 10px;
+                        border-radius: 30px;
+                    }
+                }
+                .sub {
+                    .keyword {
+                        text-align: center;
+                        border: 1px dashed;
+                        width: fit-content;
+                        padding: 5px 0 5px 15px;
+                        border-radius: 30px;
+                        margin-right: 5px;
+                        margin-bottom: 10px;
+                        display: inline-block;
+
+                        .volume {
+                            font-size: 14px;
+                            background: white;
+                            margin-left: 10px;
+                            padding: 5px 10px;
+                            border-radius: 30px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
