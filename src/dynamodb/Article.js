@@ -60,6 +60,10 @@ export async function get(lastEvaluatedKey = {}, author = null) {
     }
 }
 
+export async function all() {
+    return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['id', 'slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'author', 'links_out', 'tags']);
+}
+
 export async function allSlug() {
     return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['title', 'slug']);
 }

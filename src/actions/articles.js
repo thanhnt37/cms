@@ -15,6 +15,10 @@ export const constants = {
     RESPONSE_GET_LIST_ARTICLES_SUCCEED: 'RESPONSE_GET_LIST_ARTICLES_SUCCEED',
     RESPONSE_GET_LIST_ARTICLES_FAILED: 'RESPONSE_GET_LIST_ARTICLES_FAILED',
 
+    REQUEST_GET_ALL_ARTICLES: 'REQUEST_GET_ALL_ARTICLES',
+    RESPONSE_GET_ALL_ARTICLES_SUCCEED: 'RESPONSE_GET_ALL_ARTICLES_SUCCEED',
+    RESPONSE_GET_ALL_ARTICLES_FAILED: 'RESPONSE_GET_ALL_ARTICLES_FAILED',
+
     REQUEST_CHANGE_PAGE: 'REQUEST_CHANGE_PAGE',
     RESPONSE_CHANGE_PAGE_SUCCEED: 'RESPONSE_CHANGE_PAGE_SUCCEED',
     RESPONSE_CHANGE_PAGE_FAILED: 'RESPONSE_CHANGE_PAGE_FAILED',
@@ -44,6 +48,10 @@ export const actions = {
     requestGetListArticles: (lastEvaluatedKey = {}, author = {}) => ({type: constants.REQUEST_GET_LIST_ARTICLES, payload: {lastEvaluatedKey, author}}),
     responseGetListArticlesSucceed: (articles) => ({type: constants.RESPONSE_GET_LIST_ARTICLES_SUCCEED, payload: {articles}}),
     responseGetListArticlesFailed: () => ({type: constants.RESPONSE_GET_LIST_ARTICLES_FAILED, payload: {}}),
+
+    requestGetAllArticles: () => ({type: constants.REQUEST_GET_ALL_ARTICLES, payload: {}}),
+    responseGetAllArticlesSucceed: (articles) => ({type: constants.RESPONSE_GET_ALL_ARTICLES_SUCCEED, payload: {articles}}),
+    responseGetAllArticlesFailed: () => ({type: constants.RESPONSE_GET_ALL_ARTICLES_FAILED, payload: {}}),
 
     requestChangePage: (page) => ({type: constants.REQUEST_CHANGE_PAGE, payload: {page}}),
     responseChangePageSucceed: () => ({type: constants.RESPONSE_CHANGE_PAGE_SUCCEED, payload: {}}),

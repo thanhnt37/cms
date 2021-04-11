@@ -10,6 +10,7 @@ export default [
     throttle(3000, articleConstants.REQUEST_UPDATE_ARTICLE, updateArticle),
     throttle(3000, articleConstants.REQUEST_FIND_ARTICLE, findArticle),
     throttle(3000, articleConstants.REQUEST_GET_LIST_ARTICLES, getListArticles),
+    throttle(3000, articleConstants.REQUEST_GET_ALL_ARTICLES, getAllArticles),
     throttle(3000, articleConstants.REQUEST_ALL_ARTICLE_SLUGS, allArticleSlugs),
     throttle(3000, articleConstants.REQUEST_PUBLISH_ARTICLE, publishArticle),
 ];
@@ -61,7 +62,18 @@ function* getListArticles({payload, type}) {
 
         yield put(articleActions.responseGetListArticlesSucceed(articles));
     } catch (e) {
-        yield put(articleActions.responseFindArticleFailed());
+        yield put(articleActions.responseGetListArticlesFailed());
+        yield put(pageLoadingActions.stopPageLoading());
+    }
+}
+
+function* getAllArticles({payload, type}) {
+    try {
+        const articles = yield call(ArticleModel.all);
+
+        yield put(articleActions.responseGetAllArticlesSucceed(articles));
+    } catch (e) {
+        yield put(articleActions.responseGetAllArticlesFailed());
         yield put(pageLoadingActions.stopPageLoading());
     }
 }

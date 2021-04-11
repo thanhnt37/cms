@@ -6,8 +6,9 @@ import './styles.scss';
 const _ = require('lodash');
 
 const ArticleAnalysis = (props) => {
-
     let articles = props.articles;
+    articles.Items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
+
     let data = {};
 
     for(let i = 0; i < articles.Items.length; i++) {

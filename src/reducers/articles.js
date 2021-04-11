@@ -10,7 +10,12 @@ const initState = {
         currentPage: 0
     },
     detail: {},
-    allSlugs: []
+    allSlugs: [],
+    analytics: {
+        Count: 0,
+        ScannedCount: 0,
+        Items: [],
+    }
 };
 
 export default (state = initState, action) => {
@@ -90,6 +95,12 @@ export default (state = initState, action) => {
                     currentPage: state.index.currentPage
                 },
                 detail: {}
+            };
+
+        case constants.RESPONSE_GET_ALL_ARTICLES_SUCCEED:
+            return {
+                ...state,
+                analytics: action.payload.articles
             };
 
         case constants.REQUEST_CHANGE_PAGE:

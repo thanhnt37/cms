@@ -14,17 +14,14 @@ export class AnalyticsContainer extends Component {
         super(props);
 
         this.state = {
-            // pageSize: 10,
-            // currentPage: props.articles.currentPage,
             articles: props.articles,
-            // authenticate: props.authenticate
         };
     }
 
     componentDidMount() {
         if(_.isEmpty(this.props.articles.Items)) {
             this.props.startPageLoading();
-            this.props.requestGetListArticles({});
+            this.props.requestGetAllArticles({});
         }
     }
 
@@ -34,7 +31,6 @@ export class AnalyticsContainer extends Component {
 
             return {
                 ...prevState,
-                // currentPage: nextProps.articles.currentPage,
                 articles: nextProps.articles
             };
         }
@@ -52,13 +48,13 @@ export class AnalyticsContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    articles: state.articles.index,
+    articles: state.articles.analytics
 });
 
 const actions = {
     startPageLoading: pageLoadingActions.startPageLoading,
     stopPageLoading: pageLoadingActions.stopPageLoading,
-    requestGetListArticles: articleActions.requestGetListArticles, // TODO: get all articles
+    requestGetAllArticles: articleActions.requestGetAllArticles,
 };
 
 export default connect(mapStateToProps, actions)(AnalyticsContainer);
