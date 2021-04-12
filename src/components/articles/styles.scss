@@ -20,6 +20,9 @@
             overflow: auto;
 
             table {
+                th {
+                    font-weight: bold;
+                }
                 tr {
                     td {
                         color: #ccc;

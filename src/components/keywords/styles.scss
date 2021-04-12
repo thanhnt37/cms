@@ -1,0 +1,32 @@
+#keywords {
+    .content {
+        padding: 20px;
+
+        .search-wrapper {
+            position: relative;
+
+            .label {
+                margin-bottom: 25px;
+                max-width: 650px;
+            }
+            .create-new {
+                position: absolute;
+                top: -15px;
+                right: 10px;
+                padding: 0 25px;
+            }
+        }
+        .table-wrapper {
+            overflow: auto;
+
+            table {
+                tr {
+                    th {
+                        font-weight: bold;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+    }
+}
