@@ -17,10 +17,20 @@ const ArticleAnalysis = (props) => {
     let articles = props.articles;
     articles.Items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
 
+    let totalArticles = articles.Items.length;
+    let totalPublished = 0;
+    let redirectedArticles = [];
     let data = {};
-
     for(let i = 0; i < articles.Items.length; i++) {
         let article = articles.Items[i];
+
+        if(!_.isEmpty(article.redirected_to)) {
+            redirectedArticles.push(article);
+            continue;
+        }
+        if(_.get(article, 'is_published', 'false') === 'true') {
+            totalPublished += 1;
+        }
 
         // keyword analytic
         let tags = JSON.parse(article.tags);
@@ -90,6 +100,7 @@ const ArticleAnalysis = (props) => {
         };
     }
     data = Object.values(data);
+    let uniqueArticles = totalArticles - redirectedArticles.length;
 
     const _renderSubKeyword = (subKeywords = []) => {
         let html = [];
@@ -172,6 +183,13 @@ const ArticleAnalysis = (props) => {
             </Paper>
 
             <h1>Article Analysis</h1>
+            <ul className="statistic">
+                <li>Total: {totalArticles} articles</li>
+                <li>Unique: {uniqueArticles} - Redirecting: {redirectedArticles.length}</li>
+                <li>Link Errors: {data.length - uniqueArticles}</li>
+                <li>On Publishing: {totalPublished} articles</li>
+                <li>On Writing: {uniqueArticles - totalPublished} articles</li>
+            </ul>
 
             <Paper elevation={0} className="content">
                 <table>
