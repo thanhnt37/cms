@@ -6,6 +6,14 @@ import './styles.scss';
 const _ = require('lodash');
 
 const ArticleAnalysis = (props) => {
+
+    let keywords = props.keywords.Items;
+    let globalTags = {};
+    for(let i = 0; i < keywords.length; i++) {
+        let keyword = keywords[i];
+        globalTags[keyword.slug] = keyword;
+    }
+
     let articles = props.articles;
     articles.Items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
 
@@ -21,7 +29,7 @@ const ArticleAnalysis = (props) => {
         let mainTag = {
             slug: tagKeys[0],
             text: tags[tagKeys[0]],
-            volume: '1k - 10k'
+            volume: _.get(globalTags, `${tagKeys[0]}.volume`, 'unknown')
         };
         delete tags[Object.keys(tags)[0]];
         for(let slug in tags) {
@@ -29,7 +37,7 @@ const ArticleAnalysis = (props) => {
                 {
                     slug: slug,
                     text: tags[slug],
-                    volume: '1k - 10k'
+                    volume: _.get(globalTags, `${slug}.volume`, 'unknown')
                 }
             );
         }
@@ -41,7 +49,7 @@ const ArticleAnalysis = (props) => {
                 let target = link.url.split("/")[2];
                 let linkIn = {
                     text: link.text,
-                    url: `/blog/${article.slug}` // nhằm chỉ ra backlink này đến từ đâu?
+                    url: `/articles/${article.slug}` // nhằm chỉ ra backlink này đến từ đâu?
                 };
                 if(_.has(data, target)) {
                     if(_.has(data, `${target}.links_in`)) {
@@ -62,6 +70,8 @@ const ArticleAnalysis = (props) => {
                         links_in: [linkIn]
                     }
                 }
+
+                linksOut[j].url = `/articles/${target}`;
             }
         }
 
@@ -122,7 +132,7 @@ const ArticleAnalysis = (props) => {
             html.push(
                 <tr>
                     <td className="title">
-                        <a href={`/articles/${article.slug}`} target="_blank" title={article.title}>{article.title}</a>
+                        <a href={`/articles/${article.slug}`} target="_blank" title={article.slug}>{article.title}</a>
                     </td>
                     <td className="word-count">
                         <span>{article.word_count}</span>
