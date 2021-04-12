@@ -131,6 +131,7 @@ const ArticleAnalysis = (props) => {
 
             html.push(
                 <tr>
+                    <td className="number-order">{i + 1}</td>
                     <td className="title">
                         <a href={`/articles/${article.slug}`} target="_blank" title={article.slug}>{article.title}</a>
                     </td>
@@ -175,6 +176,7 @@ const ArticleAnalysis = (props) => {
             <Paper elevation={0} className="content">
                 <table>
                     <tr>
+                        <th>No.</th>
                         <th>Title</th>
                         <th>Word Count</th>
                         <th>Keywords</th>
