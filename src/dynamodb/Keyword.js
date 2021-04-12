@@ -9,7 +9,7 @@ export async function findBySlug(slug) {
 
 export async function create(data) {
     // TODO: data validation
-    return await DynamoDBServices.create(TABLE_NAME, data);
+    return await DynamoDBServices.create(TABLE_NAME, data, false);
 }
 
 export async function update(slug, data) {

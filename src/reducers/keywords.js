@@ -1,6 +1,5 @@
 import {constants} from '../actions/keywords';
 
-const _ = require('lodash');
 const initState = {
     index: {
         Count: 0,
@@ -13,6 +12,22 @@ const initState = {
 export default (state = initState, action) => {
 
     switch (action.type) {
+
+        case constants.RESPONSE_CREATE_NEW_KEYWORD_SUCCEED:
+            return {
+                ...state,
+                index: {
+                    Count: state.index.Count + 1,
+                    ScannedCount: state.index.ScannedCount + 1,
+                    Items: [
+                        action.payload.keyword,
+                        ...state.index.Items
+                    ],
+                    LastEvaluatedKey: state.index.LastEvaluatedKey,
+                }
+            };
+
+
         case constants.RESPONSE_GET_ALL_KEYWORDS_SUCCEED:
             return {
                 ...state,

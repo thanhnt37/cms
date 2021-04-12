@@ -19,7 +19,6 @@ const Keywords = (props) => {
     items = _.orderBy(items, ['volume'], ['desc']);
     for(let i = 0; i < items.length; i++) {
         if(i%2) {
-            console.log("skipped: i=", i);
             continue;
         }
         rows.push(
