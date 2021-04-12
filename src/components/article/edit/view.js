@@ -156,11 +156,35 @@ const ArticlesDetail = (props) => {
                                         value={props.article.slug}
                                     />
                                 </Grid>
+
+                                {
+                                    props.showPublishButton ?
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            margin="normal"
+                                            label="Redirected to"
+                                            name='redirected_to'
+                                            fullWidth={true}
+                                            value={props.article.redirected_to || ''}
+                                            onChange={props.changeTextField}
+                                        />
+                                    </Grid>
+                                        :
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            margin="normal"
+                                            label="Redirected to"
+                                            fullWidth={true}
+                                            value={props.article.redirected_to || ''}
+                                            disabled
+                                        />
+                                    </Grid>
+                                }
                             </Grid>
 
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <Grid container>
-                                    <Grid item xs={12} style={{marginTop: '20px'}}>
+                                    <Grid item xs={12} sm={6} style={{marginTop: '20px'}}>
                                         <InputLabel htmlFor="published_at">
                                             Published At
                                         </InputLabel>
@@ -171,7 +195,19 @@ const ArticlesDetail = (props) => {
                                             onChange={props.changeDateTime}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} style={{marginTop: '20px'}}>
+                                    <Grid item xs={12} sm={6} style={{marginTop: '20px'}}>
+                                        <InputLabel htmlFor="rendering_style">
+                                            Rendering Style
+                                        </InputLabel>
+                                        <TextField
+                                            type="number"
+                                            name='rendering_style'
+                                            value={props.article.rendering_style || 1}
+                                            onChange={props.changeTextField}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
                                         <InputLabel htmlFor="is_enabled">
                                             is Enabled
                                         </InputLabel>
@@ -184,20 +220,9 @@ const ArticlesDetail = (props) => {
                                             onChange={props.changeTextField}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} style={{marginTop: '20px'}}>
-                                        <InputLabel htmlFor="rendering_style">
-                                            Rendering Style
-                                        </InputLabel>
-                                        <TextField
-                                            type="number"
-                                            name='rendering_style'
-                                            value={props.article.rendering_style || 1}
-                                            onChange={props.changeTextField}
-                                        />
-                                    </Grid>
                                     {
                                         props.showPublishButton &&
-                                        <Grid item xs={12} style={{marginTop: '20px'}}>
+                                        <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
                                             <InputLabel htmlFor="is_featured">
                                                 is Featured
                                             </InputLabel>
@@ -207,6 +232,22 @@ const ArticlesDetail = (props) => {
                                                 margin="normal"
                                                 id="is_featured"
                                                 name="is_featured"
+                                                onChange={props.changeTextField}
+                                            />
+                                        </Grid>
+                                    }
+                                    {
+                                        props.showPublishButton &&
+                                        <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
+                                            <InputLabel htmlFor="is_published">
+                                                is Published
+                                            </InputLabel>
+                                            <FormControlLabel
+                                                checked={JSON.parse(props.article.is_published || "false")}
+                                                control={<Switch size="medium" color="primary" />}
+                                                margin="normal"
+                                                id="is_published"
+                                                name="is_published"
                                                 onChange={props.changeTextField}
                                             />
                                         </Grid>

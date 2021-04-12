@@ -125,6 +125,8 @@ export class ArticleComponent extends Component {
             article['is_enabled'] = e.target.checked.toString();
         } else if(e.target.name === 'is_featured') {
             article['is_featured'] = e.target.checked.toString();
+        } else if(e.target.name === 'is_published') {
+            article['is_published'] = e.target.checked.toString();
         } else if(e.target.name === 'tags') {
             let tmpTags = e.target.value;
             _.remove(tmpTags, function(i) {
