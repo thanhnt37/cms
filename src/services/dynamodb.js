@@ -169,8 +169,8 @@ export function create(tableName, data, uuid = true) {
     if(uuid) {
         data['id'] = uuidv1();
     }
-    data['created_at'] = moment().format('YYYY-MM-DD h:mm:ss');
-    data['updated_at'] = moment().format('YYYY-MM-DD h:mm:ss');
+    data['created_at'] = moment().format('YYYY-MM-DD HH:mm:ss');
+    data['updated_at'] = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let params = {
         TableName: tableName,
@@ -201,7 +201,7 @@ export function create(tableName, data, uuid = true) {
  *      data        Object  new data attributes only
  * */
 export async function update(tableName, key, data = {}) {
-    data['updated_at'] = moment().format('YYYY-MM-DD h:mm:ss');
+    data['updated_at'] = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let params = {
         TableName: tableName,
@@ -252,7 +252,7 @@ export async function update(tableName, key, data = {}) {
  * */
 export function deleteItem(tableName, key, softDelete = false) {
     if(softDelete) {
-        return update(tableName, key, {deletedAt: moment().format('YYYY-MM-DD h:mm:ss')});
+        return update(tableName, key, {deletedAt: moment().format('YYYY-MM-DD HH:mm:ss')});
     } else {
         let params = {
             TableName: tableName,
@@ -284,6 +284,11 @@ export function batchWriteItem(tableName, method, items = []) {
     method = _.capitalize(method) + 'Request';
     if(!_.includes(["PutRequest", "DeleteRequest"], method)) {
         return false;
+    }
+
+    for(let i = 0; i < items.length; i++) {
+        items[i]['created_at'] = moment().format('YYYY-MM-DD HH:mm:ss');
+        items[i]['updated_at'] = moment().format('YYYY-MM-DD HH:mm:ss');
     }
 
     let params = { RequestItems: {} };
