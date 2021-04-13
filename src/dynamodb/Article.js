@@ -65,5 +65,5 @@ export async function all() {
 }
 
 export async function allSlug() {
-    return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['title', 'slug']);
+    return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['title', 'slug', 'redirected_to']);
 }

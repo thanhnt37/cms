@@ -66,6 +66,8 @@ import 'react-tagsinput/react-tagsinput.css'
 
 import './styles.scss';
 
+const _ = require('lodash');
+
 const renderEditor = (props) => {
     if(props.imageUploadToS3 !== undefined) {
         return (
@@ -287,11 +289,16 @@ const ArticlesDetail = (props) => {
                                         </div>
                                     )}
                                 >
-                                    {props.allSlugs.map(article => (
-                                        <MenuItem key={article.slug} value={article.slug}>
-                                            {article.title}
-                                        </MenuItem>
-                                    ))}
+                                    {props.allSlugs.map(article => {
+                                        if(!_.isEmpty(article.redirected_to)) {
+                                            return;
+                                        }
+                                        return (
+                                            <MenuItem key={article.slug} value={article.slug}>
+                                                {article.title}
+                                            </MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </FormControl>
                         </Grid>
