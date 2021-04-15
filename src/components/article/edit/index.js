@@ -129,6 +129,8 @@ export class ArticleComponent extends Component {
             article['is_published'] = e.target.checked.toString();
         } else if(e.target.name === 'is_locked_keywords') {
             article['is_locked_keywords'] = e.target.checked.toString();
+        } else if(e.target.name === 'is_frozen') {
+            article['is_frozen'] = e.target.checked.toString();
         } else if(e.target.name === 'related_articles') {
             let tmpRelatedArticles = e.target.value;
             _.remove(tmpRelatedArticles, function(i) {
@@ -202,6 +204,13 @@ export class ArticleComponent extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         this.props.startPageLoading();
+
+        if(this.props.article.is_frozen === 'true') {
+            this.props.newWarningMessage('Caution, This article is locked & cannot be changed !!!');
+            this.props.stopPageLoading();
+
+            return false;
+        }
 
         let content = document.createElement('div');
         content.innerHTML = this.state.article.content;

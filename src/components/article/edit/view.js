@@ -220,7 +220,7 @@ const ArticlesDetail = (props) => {
                                         />
                                     </Grid>
 
-                                    <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
+                                    <Grid item xs={12} sm={3} style={{marginTop: '20px'}}>
                                         <InputLabel htmlFor="is_enabled">
                                             is Enabled
                                         </InputLabel>
@@ -235,7 +235,7 @@ const ArticlesDetail = (props) => {
                                     </Grid>
                                     {
                                         props.showPublishButton &&
-                                        <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
+                                        <Grid item xs={12} sm={3} style={{marginTop: '20px'}}>
                                             <InputLabel htmlFor="is_featured">
                                                 is Featured
                                             </InputLabel>
@@ -251,7 +251,7 @@ const ArticlesDetail = (props) => {
                                     }
                                     {
                                         props.showPublishButton &&
-                                        <Grid item xs={12} sm={4} style={{marginTop: '20px'}}>
+                                        <Grid item xs={12} sm={3} style={{marginTop: '20px'}}>
                                             <InputLabel htmlFor="is_published">
                                                 is Published
                                             </InputLabel>
@@ -261,6 +261,22 @@ const ArticlesDetail = (props) => {
                                                 margin="normal"
                                                 id="is_published"
                                                 name="is_published"
+                                                onChange={props.changeTextField}
+                                            />
+                                        </Grid>
+                                    }
+                                    {
+                                        props.showPublishButton &&
+                                        <Grid item xs={12} sm={3} style={{marginTop: '20px'}}>
+                                            <InputLabel htmlFor="is_frozen">
+                                                is Frozen
+                                            </InputLabel>
+                                            <FormControlLabel
+                                                checked={JSON.parse(props.article.is_frozen || "false")}
+                                                control={<Switch size="medium" color="primary" />}
+                                                margin="normal"
+                                                id="is_frozen"
+                                                name="is_frozen"
                                                 onChange={props.changeTextField}
                                             />
                                         </Grid>
