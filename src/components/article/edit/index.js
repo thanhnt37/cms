@@ -205,7 +205,7 @@ export class ArticleComponent extends Component {
         e.preventDefault();
         this.props.startPageLoading();
 
-        if(this.props.article.is_frozen === 'true') {
+        if((this.state.article.is_frozen === 'true') && (this.props.article.is_frozen === 'true')) {
             this.props.newWarningMessage('Caution, This article is locked & cannot be changed !!!');
             this.props.stopPageLoading();
 
