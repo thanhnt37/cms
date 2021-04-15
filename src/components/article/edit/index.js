@@ -127,12 +127,8 @@ export class ArticleComponent extends Component {
             article['is_featured'] = e.target.checked.toString();
         } else if(e.target.name === 'is_published') {
             article['is_published'] = e.target.checked.toString();
-        } else if(e.target.name === 'tags') {
-            let tmpTags = e.target.value;
-            _.remove(tmpTags, function(i) {
-                return (i === 'null') || (i === '');
-            });
-            article['tags'] = tmpTags.join(', ');
+        } else if(e.target.name === 'is_locked_keywords') {
+            article['is_locked_keywords'] = e.target.checked.toString();
         } else if(e.target.name === 'related_articles') {
             let tmpRelatedArticles = e.target.value;
             _.remove(tmpRelatedArticles, function(i) {
@@ -160,15 +156,19 @@ export class ArticleComponent extends Component {
     }
 
     _changeTags = (tags) => {
-        this.setState(
-            {
-                ...this.state,
-                article: {
-                    ...this.state.article,
-                    tags: tags
+        if(this.state.article.is_locked_keywords !== 'true') {
+            this.setState(
+                {
+                    ...this.state,
+                    article: {
+                        ...this.state.article,
+                        tags: tags
+                    }
                 }
-            }
-        );
+            );
+        } else {
+            this.props.newWarningMessage('Caution, The keywords is locked & cannot be changed !!!');
+        }
     }
 
     _changePreviewContent = (model) => {
@@ -349,7 +349,8 @@ const actions = {
     requestPublishArticle: articleActions.requestPublishArticle,
     startPageLoading: pageLoadingActions.startPageLoading,
     stopPageLoading: pageLoadingActions.stopPageLoading,
-    newErrorMessage: globalMessageActions.newErrorMessage
+    newErrorMessage: globalMessageActions.newErrorMessage,
+    newWarningMessage: globalMessageActions.newWarningMessage,
 };
 
 export default connect(mapStateToProps, actions)(ArticleComponent);

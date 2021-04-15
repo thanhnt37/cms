@@ -159,6 +159,16 @@ const ArticlesDetail = (props) => {
                                     />
                                 </Grid>
 
+                                <Grid item xs={12}>
+                                    <TextField
+                                        disabled
+                                        label="Author"
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={props.article.author}
+                                    />
+                                </Grid>
+
                                 {
                                     props.showPublishButton ?
                                     <Grid item xs={12}>
@@ -172,6 +182,7 @@ const ArticlesDetail = (props) => {
                                         />
                                     </Grid>
                                         :
+                                    (!_.isEmpty(props.article.redirected_to)) &&
                                     <Grid item xs={12}>
                                         <TextField
                                             margin="normal"
@@ -260,12 +271,29 @@ const ArticlesDetail = (props) => {
                     </Grid>
 
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={props.showPublishButton ? 10 : 12}>
                             <InputLabel htmlFor="tags" style={{marginBottom: '10px', fontSize: '12px'}}>
                                 Tags*
                             </InputLabel>
                             <TagsInput required id="tags" value={props.article.tags} onChange={props.changeTags} />
                         </Grid>
+
+                        {
+                            props.showPublishButton &&
+                            <Grid item xs={12} sm={2} style={{marginTop: '15px'}}>
+                                <InputLabel htmlFor="is_locked_keywords">
+                                    is Locked Keywords
+                                </InputLabel>
+                                <FormControlLabel
+                                    checked={JSON.parse(props.article.is_locked_keywords || "false")}
+                                    control={<Switch size="medium" color="primary" />}
+                                    margin="normal"
+                                    id="is_locked_keywords"
+                                    name="is_locked_keywords"
+                                    onChange={props.changeTextField}
+                                />
+                            </Grid>
+                        }
                     </Grid>
 
                     <Grid container spacing={3}>
