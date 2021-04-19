@@ -283,22 +283,26 @@ export class ArticleComponent extends Component {
         content = content.innerHTML;
 
         let slug = this.state.article.slug; // (this.state.article.slug === DEFAULT_CREATE_PATH) ? _.toLower(slugify(e.target.title.value, {remove: /[!@#$%^&*();:'"~`?.,<>//]/g})) : this.state.article.slug;
-        let tags = this.state.article.tags;
-        let tagsObject = {};
-        tags.forEach(function (value, index) {
-            value = value.toLowerCase().trim();
-            tagsObject[slugify(value)] = value;
-        });
         let article = {
             ...this.state.article,
             // TODO: check nếu là tạo mới thì mới generate new slug, cần check xem slug mới đã tồn tại trên dynamodb chưa ?
-            // slug: slug,
-            tags: JSON.stringify(tagsObject),
             content: content,
             table_of_contents: tableOfContents,
             words_count: wordsCount,
             links_out: JSON.stringify(linksOut),
         };
+        if(this.state.article.is_locked_keywords !== 'true') {
+            let tags = this.state.article.tags;
+            let tagsObject = {};
+            tags.forEach(function (value, index) {
+                value = value.toLowerCase().trim();
+                tagsObject[slugify(value)] = value;
+            });
+
+            article.tags = JSON.stringify(tagsObject);
+        } else {
+            delete article.tags;
+        }
 
         if(typeof(article.poster) === 'object') {
             await S3Services.putObject(process.env.REACT_APP_AWS_S3_BUCKET_NAME, `${slug}.jpg`, this.state.article.poster);
