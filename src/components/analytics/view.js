@@ -15,7 +15,6 @@ const ArticleAnalysis = (props) => {
     }
 
     let articles = props.articles;
-    articles.Items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
 
     let totalArticles = articles.Items.length;
     let totalPublished = 0;
@@ -100,6 +99,7 @@ const ArticleAnalysis = (props) => {
         };
     }
     data = Object.values(data);
+    data = _.orderBy(data, ['title'], ['asc']);
     let uniqueArticles = totalArticles - redirectedArticles.length;
 
     const _renderSubKeyword = (subKeywords = []) => {
