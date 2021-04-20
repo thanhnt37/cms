@@ -221,8 +221,7 @@ export class ArticleComponent extends Component {
             for(let i = 0; i < p.length; i++) {
                 let currentP = p[i];
 
-                if(_.isEmpty(currentP.innerText) || (currentP.getAttribute('class') === "fr-img-space-wrap2") || (currentP.getAttribute('data-f-id') === "pbf")) {
-                    console.log("removed ", currentP);
+                if(_.isEmpty(currentP.innerText) || ((currentP.getAttribute('class') === "fr-img-space-wrap2") && (currentP.innerText.length <= 1)) || (currentP.getAttribute('data-f-id') === "pbf")) {
                     currentP.remove();
                 }
             }
