@@ -8,6 +8,40 @@ const _ = require('lodash');
 
 const Keywords = (props) => {
 
+    let articles = props.articles;
+    let relations = [];
+    const relationColumns = [
+        { id: 'no', label: 'No.', width: 25 },
+        { id: 'keyword', label: 'Keyword', width: 175 },
+        { id: 'volume', label: 'Volume', width: 75 },
+        { id: 'words_count', label: 'Words Count', width: 110 },
+        { id: 'target', label: 'Target' }
+    ];
+    for(let i = 0; i < articles.Items.length; i++) {
+        let article = articles.Items[i];
+        if(article.is_enabled !== 'true') {
+            continue;
+        }
+
+        let tags = JSON.parse(article.tags);
+        let tagKeys = Object.keys(tags);
+        let keyword = _.find(props.keywords.Items, ['slug', tagKeys[0]]) || {text: tags[tagKeys[0]], volume: 'unknown'};
+        relations.push(
+            {
+                keyword: keyword.text,
+                volume: keyword.volume,
+                is_featured: article.is_featured || 'false',
+                is_published: article.is_published,
+                words_count: article.words_count,
+                target: {
+                    title: article.title,
+                    slug: article.slug
+                },
+            }
+        );
+    }
+    relations = _.orderBy(relations, ['is_featured', 'keyword'], ['desc', 'asc']);
+
     let rows = [];
     const columns = [
         { id: 'text_1', label: 'Keyword' },
@@ -40,6 +74,50 @@ const Keywords = (props) => {
                     </Link>
                     <Typography color="textPrimary">Keywords</Typography>
                 </Breadcrumbs>
+            </Paper>
+
+            <Paper elevation={0} className="content">
+                <Paper elevation={0} className="table-wrapper">
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {relationColumns.map(column => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ width: column.width }}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {relations.map((row, index) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} className={(row.is_featured === 'true') ? 'featured' : ((row.is_published === 'true') ? 'published' : 'not-published')}>
+                                        {
+                                            relationColumns.map(column => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell>
+                                                        {
+                                                            column.id === 'no' ?
+                                                                index + 1 :
+                                                            column.id === 'target' ?
+                                                                <a href={`/articles/${value.slug}`} target="_blank" rel="noopener noreferrer">{ value.title }</a> :
+                                                                value
+                                                        }
+                                                    </TableCell>
+                                                );
+                                            })
+                                        }
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
             </Paper>
 
             <Paper elevation={0} className="content">

@@ -1,6 +1,7 @@
 #keywords {
     .content {
         padding: 20px;
+        margin-bottom: 50px;
 
         .search-wrapper {
             position: relative;
@@ -25,6 +26,15 @@
                         font-weight: bold;
                         text-transform: uppercase;
                     }
+                }
+                tr.featured {
+                    background: #ffdede;
+                }
+                tr.not-published {
+                    background: #efefef;
+                }
+                a {
+                    color: blue;
                 }
             }
         }
