@@ -71,6 +71,7 @@ const ArticleAnalysis = (props) => {
                         slug: `${article.slug}`,
                         title: `a bug from ${article.title}`,
                         word_count: 'not_counted',
+                        is_featured: 'false',
                         keywords: {
                             main: {},
                             sub: []
@@ -90,6 +91,7 @@ const ArticleAnalysis = (props) => {
 
             slug: article.slug,
             title: article.title,
+            is_featured: article.is_featured || 'false',
             word_count: article.words_count || 'not_counted',
             keywords: {
                 main: mainTag,
@@ -99,7 +101,7 @@ const ArticleAnalysis = (props) => {
         };
     }
     data = Object.values(data);
-    data = _.orderBy(data, ['title'], ['asc']);
+    data = _.orderBy(data, ['is_featured', 'word_count'], ['desc', 'desc']);
     let uniqueArticles = totalArticles - redirectedArticles.length;
 
     const _renderSubKeyword = (subKeywords = []) => {
@@ -141,7 +143,7 @@ const ArticleAnalysis = (props) => {
             let article = data[i];
 
             html.push(
-                <tr>
+                <tr className={(article.is_featured === 'true') ? 'featured' : ''}>
                     <td className="number-order">{i + 1}</td>
                     <td className="title">
                         <a href={`/articles/${article.slug}`} target="_blank" title={article.slug}>{article.title}</a>
@@ -193,16 +195,19 @@ const ArticleAnalysis = (props) => {
 
             <Paper elevation={0} className="content">
                 <table>
-                    <tr>
-                        <th>No.</th>
-                        <th>Title</th>
-                        <th>Word Count</th>
-                        <th>Keywords</th>
-                        <th>Links In</th>
-                        <th>Links Out</th>
-                    </tr>
-
-                    { _renderRecords() }
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Title</th>
+                            <th>Word Count</th>
+                            <th>Keywords</th>
+                            <th>Links In</th>
+                            <th>Links Out</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { _renderRecords() }
+                    </tbody>
                 </table>
             </Paper>
         </Container>

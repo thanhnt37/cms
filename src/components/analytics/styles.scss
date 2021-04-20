@@ -17,6 +17,9 @@
             tr:nth-child(even) {
                 background-color: #e8e8e8;
             }
+            tr.featured {
+                background: #ffdede;
+            }
             td, th {
                 border: 1px solid #dddddd;
                 padding: 0;
