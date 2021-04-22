@@ -98,7 +98,31 @@ export async function allEnabledArticles() {
 }
 
 export async function all() {
-    return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'links_out', 'tags', 'is_published', 'redirected_to', 'is_featured']);
+    let articles = {
+        Count: 0,
+        ScannedCount: 0,
+        Items: []
+    };
+
+    let lastEvaluatedKey = {};
+    while(true) {
+        let items = await DynamoDBServices.scans(
+            TABLE_NAME, [], 10, lastEvaluatedKey,
+            ['slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'links_out', 'tags', 'is_published', 'redirected_to', 'is_featured']
+        );
+        articles = {
+            Count: articles.Count + items.Count,
+            ScannedCount: articles.ScannedCount + items.ScannedCount,
+            Items: [...articles.Items, ...items.Items]
+        };
+
+        lastEvaluatedKey = items.LastEvaluatedKey;
+        if(_.isEmpty(lastEvaluatedKey)) {
+            break;
+        }
+    }
+
+    return articles;
 }
 
 export async function allSlug() {
