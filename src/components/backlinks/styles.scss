@@ -17,11 +17,26 @@
             overflow: auto;
 
             table {
+                width: 100%;
+                border-collapse: collapse;
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    padding: 0;
+                    text-align: left;
+                    vertical-align: initial;
+                }
                 th {
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 10px;
                     font-weight: bold;
                 }
                 tr {
                     td {
+                        border: 1px solid #dddddd;
+                        padding: 0;
+
                         ul {
                             li {
                                 margin-bottom: 10px;
@@ -34,6 +49,15 @@
                                 }
                             }
                         }
+                    }
+                    td:nth-child(1) {
+                        text-align: center;
+                    }
+                    td:nth-child(2) {
+                        padding: 15px;
+                    }
+                    td:nth-child(3) {
+                        padding: 10px;
                     }
                 }
             }

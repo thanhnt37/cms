@@ -108,7 +108,7 @@ export async function all() {
     while(true) {
         let items = await DynamoDBServices.scans(
             TABLE_NAME, [], 10, lastEvaluatedKey,
-            ['slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'links_out', 'tags', 'is_published', 'redirected_to', 'is_featured']
+            ['slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'links_out', 'tags', 'is_published', 'redirected_to', 'is_featured', 'content']
         );
         articles = {
             Count: articles.Count + items.Count,
