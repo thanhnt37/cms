@@ -60,6 +60,7 @@ export class BacklinksComponent extends Component {
         }
 
         let opportunities = [];
+        let totalSentences = 0;
         for (let i = 0; i < this.state.articles.Items.length; i++) {
             let article = this.state.articles.Items[i];
             if(article.is_enabled !== 'true') {
@@ -84,6 +85,8 @@ export class BacklinksComponent extends Component {
             }
 
             if(sentences.length) {
+                totalSentences += sentences.length;
+
                 opportunities.push(
                     {
                         title: article.title,
@@ -99,6 +102,11 @@ export class BacklinksComponent extends Component {
             opportunities: opportunities
         });
         this.props.stopPageLoading();
+        if(opportunities.length === 0) {
+            this.props.newInfoMessage(`There's 0 suggestion for "${keyword}" !`);
+        } else {
+            this.props.newSuccessMessage(`There're ${totalSentences} suggestions for "${keyword}" !`);
+        }
     };
 
     render() {
@@ -121,6 +129,8 @@ const actions = {
     stopPageLoading: pageLoadingActions.stopPageLoading,
     requestGetAllArticles: articleActions.requestGetAllArticles,
     newWarningMessage: globalMessageActions.newWarningMessage,
+    newSuccessMessage: globalMessageActions.newSuccessMessage,
+    newInfoMessage: globalMessageActions.newInfoMessage,
 };
 
 export default connect(mapStateToProps, actions)(BacklinksComponent);
