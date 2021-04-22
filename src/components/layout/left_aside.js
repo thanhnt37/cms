@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
 import Drawer from '@material-ui/core/Drawer';
-import { Dashboard as DashboardIcon, Note as NoteIcon, ExitToApp as LogoutIcon, Assessment as AssessmentIcon, FindInPage as FindInPageIcon} from '@material-ui/icons';
+import {
+    Dashboard as DashboardIcon,
+    Note as NoteIcon,
+    ExitToApp as LogoutIcon,
+    Assessment as AssessmentIcon,
+    FindInPage as FindInPageIcon,
+    Link as LinkIcon
+} from '@material-ui/icons';
 
 import {actions as leftMenuActions} from "../../actions/leftMenu";
 import {actions as pageLoadingActions} from "../../actions/pageLoading";
@@ -45,6 +52,12 @@ export class LeftAsideContainer extends Component {
                             <Link to="/analytics" onClick={this._changeRoute}>
                                 <AssessmentIcon color="action" fontSize="small" />
                                 Analytics
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/backlinks" onClick={this._changeRoute}>
+                                <LinkIcon color="action" fontSize="small" />
+                                Backlink Opportunities
                             </Link>
                         </li>
                         <li>

@@ -14,6 +14,8 @@ import Analytics from "./analytics/index";
 import Keywords from "./keywords/index";
 import CreateKeyword from "./keyword/create/index";
 
+import Backlinks from "./backlinks/index";
+
 const AppRoutes = () => {
     return (
         <Switch>
@@ -28,6 +30,8 @@ const AppRoutes = () => {
 
             <Route path='/keywords/create' component={CreateKeyword}/>
             <Route path='/keywords' component={Keywords}/>
+
+            <Route path='/backlinks' component={Backlinks}/>
 
             <Route path='/' component={Dashboard}/>
         </Switch>
