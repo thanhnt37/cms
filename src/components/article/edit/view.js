@@ -82,6 +82,7 @@ const renderEditor = (props) => {
                         placeholderText: 'Write your article content here ...',
                         fontSizeDefaultSelection: '14',
                         pastePlain: true,
+                        imageAllowedTypes: ['jpeg', 'jpg'],
                         imageUploadToS3: props.imageUploadToS3
                     }
                 }
