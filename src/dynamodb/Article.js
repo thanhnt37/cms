@@ -67,6 +67,36 @@ export async function get(lastEvaluatedKey = {}, author = null) {
     }
 }
 
+export async function allEnabledArticles() {
+    let enabledArticles = {
+        Count: 0,
+        ScannedCount: 0,
+        Items: []
+    };
+
+    let lastEvaluatedKey = {};
+    while(true) {
+        let items = await DynamoDBServices.get(
+            TABLE_NAME,
+            INDEX_BY_IS_ENABLED_SORT_BY_PUBLISHED_AT,
+            { hashKey: {name: 'is_enabled', value: 'true'} },
+            { limit: 10, lastEvaluatedKey: lastEvaluatedKey, projections: '' }
+        );
+        enabledArticles = {
+            Count: enabledArticles.Count + items.Count,
+            ScannedCount: enabledArticles.ScannedCount + items.ScannedCount,
+            Items: [...enabledArticles.Items, ...items.Items]
+        };
+
+        lastEvaluatedKey = items.LastEvaluatedKey;
+        if(_.isEmpty(lastEvaluatedKey)) {
+            break;
+        }
+    }
+
+    return enabledArticles;
+}
+
 export async function all() {
     return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'links_out', 'tags', 'is_published', 'redirected_to', 'is_featured']);
 }

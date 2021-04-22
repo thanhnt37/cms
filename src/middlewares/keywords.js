@@ -7,7 +7,7 @@ import * as KeywordModel from '../dynamodb/Keyword';
 
 export default [
     throttle(3000, keywordConstants.REQUEST_CREATE_NEW_KEYWORD, createNewKeyword),
-    throttle(3000, keywordConstants.REQUEST_GET_ALL_KEYWORDS, getAllArticles),
+    throttle(3000, keywordConstants.REQUEST_GET_ALL_KEYWORDS, getAllKeywords),
 ];
 
 function* createNewKeyword({payload, type}) {
@@ -23,7 +23,7 @@ function* createNewKeyword({payload, type}) {
     }
 }
 
-function* getAllArticles({payload, type}) {
+function* getAllKeywords({payload, type}) {
     try {
         const keywords = yield call(KeywordModel.all);
 
