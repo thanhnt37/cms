@@ -235,13 +235,67 @@ export class ArticleComponent extends Component {
         }
 
         // adding table of contents
-        let tableOfContents = "<ol>";
         let h2Tags = content.getElementsByTagName('h2');
         for (let i = 0; i < h2Tags.length; i++) {
-            let item = h2Tags[i];
-            let slug = slugify(item.textContent.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
-            tableOfContents += "<li><a href='#" + slug + "'>" + item.textContent + "</a></li>";
-            content.getElementsByTagName('h2')[i].setAttribute("id", slug);
+            content.getElementsByTagName('h2')[i].setAttribute("class", 'toc-item');
+        }
+        let h3Tags = content.getElementsByTagName('h3');
+        for (let i = 0; i < h3Tags.length; i++) {
+            content.getElementsByTagName('h3')[i].setAttribute("class", 'toc-item');
+        }
+
+        let toc = [];
+        let tocTags = content.getElementsByClassName('toc-item');
+        for (let i = 0; i < tocTags.length; i++) {
+            let item = tocTags[i];
+
+            if(item.tagName.toLowerCase() === 'h2') {
+                let text = item.textContent;
+                text = text.replace(/\d+./g, '');
+                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
+                text = `${toc.length + 1}. ${text}`;
+
+                content.getElementsByClassName('toc-item')[i].innerText = text;
+                content.getElementsByClassName('toc-item')[i].setAttribute("id", slug);
+
+                toc.push(
+                    {
+                        text: text,
+                        slug: slug,
+                        h3: []
+                    }
+                );
+            } else if(item.tagName.toLowerCase() === 'h3') {
+                let text = item.textContent;
+                text = text.replace(/\d+./g, '');
+                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
+                text = `${toc.length}.${toc[toc.length - 1].h3.length + 1}. ${text}`;
+
+                content.getElementsByClassName('toc-item')[i].innerText = text;
+                content.getElementsByClassName('toc-item')[i].setAttribute("id", slug);
+
+                toc[toc.length - 1].h3.push(
+                    {
+                        text: text,
+                        slug: slug,
+                    }
+                );
+            }
+        }
+
+        let tableOfContents = "<ol class='root-toc'>";
+        for (let i = 0; i < toc.length; i++) {
+            let item = toc[i];
+
+            if(_.isEmpty(item.h3)) {
+                tableOfContents += `<li><a href="#${item.slug}">${item.text}</a></li>`;
+            } else {
+                let h3 = _.map(item.h3, function (value) {
+                    return `<li><a href="#${value.slug}">${value.text}</a></li>`;
+                });
+
+                tableOfContents += `<li><a href="#${item.slug}">${item.text}</a><ol class="sub-toc">${h3.join('')}</ol></li>`;
+            }
         }
         tableOfContents += "</ol>";
 
