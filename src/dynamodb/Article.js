@@ -30,20 +30,38 @@ export async function publish(slug) {
 }
 
 export async function get(lastEvaluatedKey = {}, author = null) {
-    let articles = await DynamoDBServices.scans(
-        TABLE_NAME,
-        [
-            {attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"},
-            // {attrKey: "author", attrValue: "2ynhunguyen@gmail.com", expression: "#author = :author"},
-            // {attrKey: "is_locked_keywords", attrValue: "true", expression: "#is_locked_keywords = :is_locked_keywords"},
-            // {attrKey: "is_frozen", attrValue: "true", expression: "#is_frozen = :is_frozen"},
-            // {attrKey: "is_frozen", expression: "attribute_not_exists(#is_frozen)"},
-            // {attrKey: "redirected_to", expression: "attribute_exists(#redirected_to)"}
-        ],
-        100,
-        lastEvaluatedKey,
-        ['id', 'slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'author', 'links_out', 'tags']
-    );
+    let articles = {
+        Count: 0,
+        ScannedCount: 0,
+        Items: []
+    };
+
+    while(true) {
+        let items =  await DynamoDBServices.scans(
+            TABLE_NAME,
+            [
+                {attrKey: "is_published", attrValue: "true", expression: "#is_published <> :is_published"},
+                // {attrKey: "author", attrValue: "2ynhunguyen@gmail.com", expression: "#author = :author"},
+                // {attrKey: "is_locked_keywords", attrValue: "true", expression: "#is_locked_keywords = :is_locked_keywords"},
+                // {attrKey: "is_frozen", attrValue: "true", expression: "#is_frozen = :is_frozen"},
+                // {attrKey: "is_frozen", expression: "attribute_not_exists(#is_frozen)"},
+                // {attrKey: "redirected_to", expression: "attribute_exists(#redirected_to)"}
+            ],
+            100,
+            lastEvaluatedKey,
+            ['id', 'slug', 'title', 'is_enabled', 'words_count', 'updated_at', 'author', 'links_out', 'tags']
+        );
+        articles = {
+            Count: articles.Count + items.Count,
+            ScannedCount: articles.ScannedCount + items.ScannedCount,
+            Items: [...articles.Items, ...items.Items]
+        };
+
+        lastEvaluatedKey = items.LastEvaluatedKey;
+        if(_.isEmpty(lastEvaluatedKey)) {
+            break;
+        }
+    }
     let items = _.orderBy(articles.Items, ['is_enabled', 'updated_at'], ['asc', 'desc']);
 
     if(author) {
