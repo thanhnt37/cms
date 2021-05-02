@@ -19,8 +19,14 @@ function* createNewArticle({payload, type}) {
     try {
         const article = yield call(ArticleModel.create, payload.article);
 
-        yield put(articleActions.responseCreateNewArticleSucceed(article));
-        yield put(globalMessageActions.newSuccessMessage('Successfully, Article is created !!!'));
+        if(article === false) {
+            yield put(articleActions.responseCreateNewArticleFailed());
+            yield put(globalMessageActions.newErrorMessage('Failed, Article exist already !!!'));
+            yield put(pageLoadingActions.stopPageLoading());
+        } else {
+            yield put(articleActions.responseCreateNewArticleSucceed(article));
+            yield put(globalMessageActions.newSuccessMessage('Successfully, Article is created !!!'));
+        }
     } catch (e) {
         yield put(articleActions.responseCreateNewArticleFailed());
         yield put(globalMessageActions.newErrorMessage('Failed, Article is not created !!!'));

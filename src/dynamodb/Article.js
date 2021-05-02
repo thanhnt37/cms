@@ -1,5 +1,7 @@
 import * as DynamoDBServices from '../services/dynamodb';
 const _ = require('lodash');
+const slugify = require('slugify');
+slugify.extend({'đ': 'd', 'Đ': 'd', });
 
 export const TABLE_NAME = process.env.REACT_APP_DB_PREFIX + "-Articles";
 export const INDEX_BY_IS_ENABLED_SORT_BY_PUBLISHED_AT = "INDEX_BY_IS_ENABLED_SORT_BY_PUBLISHED_AT";
@@ -11,7 +13,13 @@ export async function findBySlug(slug) {
 
 export async function create(data) {
     // TODO: data validation
-    return await DynamoDBServices.create(TABLE_NAME, data);
+    let slug = slugify(data.title.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
+    let check = await findBySlug(slug);
+    if(_.isEmpty(check)) {
+        return await DynamoDBServices.create(TABLE_NAME, data);
+    }
+
+    return false;
 }
 
 export async function update(slug, data) {
