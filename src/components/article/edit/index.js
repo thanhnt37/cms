@@ -267,7 +267,7 @@ export class ArticleComponent extends Component {
                 );
             } else if(item.tagName.toLowerCase() === 'h3') {
                 let text = item.textContent;
-                text = text.replace(/\d.\d /i, '');
+                text = text.replace(/\d.\d. /i, '');
                 let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
                 text = `${toc.length}.${toc[toc.length - 1].h3.length + 1}. ${text}`;
 
