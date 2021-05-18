@@ -37,6 +37,7 @@ export class ArticleComponent extends Component {
                 voted: 0,
                 rendering_style: 1,
                 related_articles: "null",
+                topic: "null",
                 ...props.article,
                 tags: _.isArray(props.article.slug) ? Object.values(JSON.parse(props.article.tags)) : [],
                 slug: props.match.params.slug,

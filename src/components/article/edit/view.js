@@ -210,15 +210,22 @@ const ArticlesDetail = (props) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{marginTop: '20px'}}>
-                                        <InputLabel htmlFor="rendering_style">
-                                            Rendering Style
-                                        </InputLabel>
-                                        <TextField
-                                            type="number"
-                                            name='rendering_style'
-                                            value={props.article.rendering_style || 1}
+                                        <InputLabel id="topic-label">Topic</InputLabel>
+                                        <Select
+                                            labelId="topic-label"
+                                            id="topic"
+                                            name="topic"
+                                            value={props.article.topic}
                                             onChange={props.changeTextField}
-                                        />
+                                            fullWidth={true}
+                                            disabled={!props.showPublishButton}
+                                        >
+                                            <MenuItem value='hat-dieu'>Hạt Điều</MenuItem>
+                                            <MenuItem value='hat-chia'>Hạt Chia</MenuItem>
+                                            <MenuItem value='hat-macca'>Hạt Macca</MenuItem>
+                                            <MenuItem value='hat-oc-cho'>Hạt Óc Chó</MenuItem>
+                                            <MenuItem value='hat-hanh-nhan'>Hạt Hạnh Nhân</MenuItem>
+                                        </Select>
                                     </Grid>
 
                                     <Grid item xs={12} sm={3} style={{marginTop: '20px'}}>
