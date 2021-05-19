@@ -54,7 +54,8 @@ const ArticleAnalysis = (props) => {
         let linksOut = JSON.parse(article.links_out || '[]');
         for(let j = 0; j < linksOut.length; j++) {
             let link = linksOut[j];
-            if(_.startsWith(link.url, '/blog/')) {
+            // TODO: check prefix theo topic name
+            if(_.startsWith(link.url, '/hat-dieu/')) {
                 let target = link.url.split("/")[2];
                 let linkIn = {
                     text: link.text,
