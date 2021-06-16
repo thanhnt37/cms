@@ -152,5 +152,32 @@ export async function all() {
 }
 
 export async function allSlug() {
-    return await DynamoDBServices.scans(TABLE_NAME, [], 1000, {}, ['title', 'slug', 'redirected_to']);
+    let articles = {
+        Count: 0,
+        ScannedCount: 0,
+        Items: []
+    };
+
+    let lastEvaluatedKey = {};
+    while(true) {
+        let items = await DynamoDBServices.scans(
+            TABLE_NAME, [], 1000,
+            lastEvaluatedKey,
+            ['title', 'slug', 'redirected_to']
+        );
+        articles = {
+            Count: articles.Count + items.Count,
+            ScannedCount: articles.ScannedCount + items.ScannedCount,
+            Items: [...articles.Items, ...items.Items]
+        };
+
+        lastEvaluatedKey = items.LastEvaluatedKey;
+        if(_.isEmpty(lastEvaluatedKey)) {
+            break;
+        }
+    }
+
+    articles.Items = _.orderBy(articles.Items, ['title'], ['asc']);
+
+    return articles;
 }
