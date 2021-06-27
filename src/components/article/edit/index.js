@@ -318,7 +318,7 @@ export class ArticleComponent extends Component {
             // statistic links out
             linksOut.push(
                 {
-                    text: item.innerHTML,
+                    text: item.text,
                     url: pathname,
                 }
             );
