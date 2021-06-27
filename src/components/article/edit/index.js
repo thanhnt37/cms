@@ -307,7 +307,7 @@ export class ArticleComponent extends Component {
             let item = aTags[i];
             let pathname = item.pathname;
 
-            content.getElementsByTagName('a')[i].setAttribute("title", item.innerHTML);
+            content.getElementsByTagName('a')[i].setAttribute("title", item.text);
             if((item.href.indexOf('hatdieubactam.vn') === -1) && (item.href.indexOf('127.0.0.1') === -1) && (item.href.indexOf('localhost') === -1)) {
                 // external links --> set nofollow, open in new tab
                 content.getElementsByTagName('a')[i].setAttribute("rel", "noopener noreferrer nofollow");
