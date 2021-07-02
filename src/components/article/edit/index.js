@@ -25,7 +25,7 @@ export class ArticleComponent extends Component {
         this.state = {
             allSlugs: props.allSlugs,
             article: {
-                title: '',
+                title: 'init_title',
                 description: "null",
                 content: "No Content",
                 poster: "http://placehold.it/720x405",
@@ -38,6 +38,7 @@ export class ArticleComponent extends Component {
                 rendering_style: 1,
                 related_articles: "null",
                 topic: "null",
+                author: "null",
                 ...props.article,
                 tags: _.isArray(props.article.slug) ? Object.values(JSON.parse(props.article.tags)) : [],
                 slug: props.match.params.slug,
@@ -75,7 +76,7 @@ export class ArticleComponent extends Component {
             };
         }
 
-        if(!_.isEmpty(nextProps.article) && (nextProps.article.title !== prevState.article.title)) {
+        if(!_.isEmpty(nextProps.article) && (prevState.article.title === 'init_title')) {
             if((nextProps.article.author !== nextProps.authenticate.authUser.attributes.email) && (nextProps.authenticate.authUser.attributes.email !== 'tatthanh.dev@gmail.com')) {
                 // show message then redirect from view
                 nextProps.newErrorMessage("Access Denied, you are not the author !!!");

@@ -141,17 +141,6 @@ const ArticlesDetail = (props) => {
                             <Grid container>
                                 <Grid item xs={12}>
                                     <TextField
-                                        margin="normal"
-                                        label="Title"
-                                        name='title'
-                                        fullWidth={true}
-                                        value={props.article.title}
-                                        disabled
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextField
                                         disabled
                                         label="Slug"
                                         fullWidth={true}
@@ -162,12 +151,32 @@ const ArticlesDetail = (props) => {
 
                                 <Grid item xs={12}>
                                     <TextField
-                                        disabled
-                                        label="Author"
-                                        fullWidth={true}
                                         margin="normal"
-                                        value={props.article.author}
+                                        label="Title"
+                                        name='title'
+                                        fullWidth={true}
+                                        value={props.article.title}
+                                        onChange={props.changeTextField}
                                     />
+                                </Grid>
+
+                                <Grid item xs={12} style={{marginTop: '20px'}}>
+                                    <InputLabel id="author-label">Author</InputLabel>
+                                    <Select
+                                        labelId="author-label"
+                                        id="author"
+                                        name="author"
+                                        value={props.article.author}
+                                        onChange={props.changeTextField}
+                                        fullWidth={true}
+                                        disabled={!props.showPublishButton}
+                                    >
+                                        <MenuItem value='tatthanh.dev@gmail.com'>tatthanh.dev@gmail.com</MenuItem>
+                                        <MenuItem value='nguyen.tat.thanh@photobank.co.jp'>nguyen.tat.thanh@photobank.co.jp</MenuItem>
+                                        <MenuItem value='2ynhunguyen@gmail.com'>2ynhunguyen@gmail.com</MenuItem>
+                                        <MenuItem value='doxuantruc20122000@gmail.com'>doxuantruc20122000@gmail.com</MenuItem>
+                                        <MenuItem value='contact.anhtthu@gmail.com'>contact.anhtthu@gmail.com</MenuItem>
+                                    </Select>
                                 </Grid>
 
                                 {
@@ -207,6 +216,7 @@ const ArticlesDetail = (props) => {
                                             format="yyyy-MM-dd HH:mm:ss"
                                             value={props.article.published_at}
                                             onChange={props.changeDateTime}
+                                            disabled={!props.showPublishButton}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{marginTop: '20px'}}>
