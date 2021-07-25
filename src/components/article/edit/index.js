@@ -254,7 +254,7 @@ export class ArticleComponent extends Component {
             if(item.tagName.toLowerCase() === 'h2') {
                 let text = item.textContent;
                 text = text.replace(/\d{1,2}. /i, '');
-                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
+                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.,<>]/g});
                 text = `${toc.length + 1}. ${text}`;
 
                 content.getElementsByClassName('toc-item')[i].innerText = text;
@@ -270,7 +270,7 @@ export class ArticleComponent extends Component {
             } else if(item.tagName.toLowerCase() === 'h3') {
                 let text = item.textContent;
                 text = text.replace(/\d{1,2}.\d{1,2}. /i, '');
-                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.<>]/g});
+                let slug = slugify(text.toLowerCase(), {remove: /[!@#$%^&*();:'"~`?.,<>]/g});
                 text = `${toc.length}.${toc[toc.length - 1].h3.length + 1}. ${text}`;
 
                 content.getElementsByClassName('toc-item')[i].innerText = text;

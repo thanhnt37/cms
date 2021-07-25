@@ -83,7 +83,8 @@ const renderEditor = (props) => {
                         fontSizeDefaultSelection: '14',
                         pastePlain: true,
                         imageAllowedTypes: ['jpeg', 'jpg'],
-                        imageUploadToS3: props.imageUploadToS3
+                        imageUploadToS3: props.imageUploadToS3,
+                        dragInline: false
                     }
                 }
             />
