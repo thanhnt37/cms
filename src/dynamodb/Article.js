@@ -3,7 +3,7 @@ const _ = require('lodash');
 const slugify = require('slugify');
 slugify.extend({'đ': 'd', 'Đ': 'd', });
 
-export const TABLE_NAME = process.env.REACT_APP_DB_PREFIX + "-Articles";
+export const TABLE_NAME = process.env.REACT_APP_DB_PREFIX + "-articles";
 export const INDEX_BY_IS_ENABLED_SORT_BY_PUBLISHED_AT = "INDEX_BY_IS_ENABLED_SORT_BY_PUBLISHED_AT";
 
 export async function findBySlug(slug) {

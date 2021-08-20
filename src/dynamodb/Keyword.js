@@ -1,6 +1,6 @@
 import * as DynamoDBServices from '../services/dynamodb';
 
-export const TABLE_NAME = "hatdieubactam-dev-Keywords";
+export const TABLE_NAME = process.env.REACT_APP_DB_PREFIX + "-keywords";
 
 export async function findBySlug(slug) {
     let keyword = await DynamoDBServices.find(TABLE_NAME, {slug: slug});
