@@ -55,7 +55,14 @@ const ArticleAnalysis = (props) => {
         for(let j = 0; j < linksOut.length; j++) {
             let link = linksOut[j];
             // TODO: check prefix theo topic name
-            if( _.startsWith(link.url, '/hat-dieu/') || _.startsWith(link.url, '/hat-chia/') || _.startsWith(link.url, '/hat-oc-cho/') || _.startsWith(link.url, '/hat-macca/') ) {
+            if(
+                _.startsWith(link.url, '/hat-dieu/') ||
+                _.startsWith(link.url, '/hat-chia/') ||
+                _.startsWith(link.url, '/hat-macca/') ||
+                _.startsWith(link.url, '/hat-sen/') ||
+                _.startsWith(link.url, '/hat-oc-cho/') ||
+                _.startsWith(link.url, '/hat-hanh-nhan/')
+        ) {
                 let target = link.url.split("/")[2];
                 let linkIn = {
                     text: link.text,

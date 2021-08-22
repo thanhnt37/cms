@@ -234,6 +234,7 @@ const ArticlesDetail = (props) => {
                                             <MenuItem value='hat-dieu'>Hạt Điều</MenuItem>
                                             <MenuItem value='hat-chia'>Hạt Chia</MenuItem>
                                             <MenuItem value='hat-macca'>Hạt Macca</MenuItem>
+                                            <MenuItem value='hat-sen'>Hạt Sen</MenuItem>
                                             <MenuItem value='hat-oc-cho'>Hạt Óc Chó</MenuItem>
                                             <MenuItem value='hat-hanh-nhan'>Hạt Hạnh Nhân</MenuItem>
                                         </Select>
